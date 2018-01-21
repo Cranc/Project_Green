@@ -1,0 +1,8 @@
+{
+  "name": "Project_Green",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

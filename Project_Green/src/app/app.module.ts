@@ -11,6 +11,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { Firebase } from '@ionic-native/firebase'; // import Firebase
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,6 +35,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   providers: [
     StatusBar,
+    Firebase,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

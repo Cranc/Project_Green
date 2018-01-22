@@ -12,6 +12,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Firebase } from '@ionic-native/firebase'; // import Firebase
+import { HttpModule } from '@angular/http';
+import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { DatabaseServiceProvider } from '../providers/database-service/database-service';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
+  authDomain: "project-green-192912.firebaseapp.com",
+  databaseURL: "https://project-green-192912.firebaseio.com",
+  projectId: "project-green-192912",
+  storageBucket: "project-green-192912.appspot.com",
+  messagingSenderId: "514275054314"
+};
 
 @NgModule({
   declarations: [
@@ -23,6 +37,10 @@ import { Firebase } from '@ionic-native/firebase'; // import Firebase
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -35,9 +53,9 @@ import { Firebase } from '@ionic-native/firebase'; // import Firebase
   ],
   providers: [
     StatusBar,
-    Firebase,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatabaseServiceProvider
   ]
 })
 export class AppModule {}

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 import { FirebaseListObservable } from 'angularfire2/database';
-import { debug } from 'util';
 
 @Component({
   selector: 'page-home',
@@ -10,9 +9,15 @@ import { debug } from 'util';
 })
 export class HomePage {
   accounts : FirebaseListObservable<any[]>;
+  blossomcolor : FirebaseListObservable<any[]>;
+  plantgroup : FirebaseListObservable<any[]>;
+  plantsubgroup : FirebaseListObservable<any[]>;
+
   constructor(public navCtrl: NavController, public db:DatabaseServiceProvider) {
     this.accounts = this.db.listAccounts();
-    debugger;
+    this.blossomcolor = this.db.listBlossomColor();
+    this.plantgroup = this.db.listPlantGroup();
+    this.plantsubgroup = this.db.listPlantSubGroup();
   }
 
 }

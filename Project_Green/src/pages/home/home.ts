@@ -4,6 +4,7 @@ import { DatabaseServiceProvider } from '../../providers/database-service/databa
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { error } from 'util';
 
 @Component({
   selector: 'page-home',
@@ -22,12 +23,22 @@ export class HomePage {
     this.plantsubgroup = this.db.listPlantSubGroup();
   }
 
+  /**
+   * Signs into the Database with a GitHub account
+   */
   public signInWithGitHub() {
     this.auth.auth
       .signInWithPopup(new firebase.auth.GithubAuthProvider())
-      .then(res => console.log(res));
+      .then(res => {
+        console.log(res);
+      }, error => {
+        console.log("could not auth");
+      })
   }
 
+  /**
+   * Signs Out of the Database
+   */
   public signOut() {
     this.auth.auth.signOut();
   }

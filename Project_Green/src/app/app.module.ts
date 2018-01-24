@@ -55,7 +55,7 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseServiceProvider
+    DatabaseServiceProvider,
   ]
 })
 export class AppModule {}

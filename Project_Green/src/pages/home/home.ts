@@ -31,6 +31,8 @@ export class HomePage {
       .signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then(res => {
         console.log(res);
+        //console.log(res.user.uid);
+        this.db.addUserToDatabase(res.user.displayName,"","",res.user.uid);
       }, error => {
         console.log("could not auth");
       })

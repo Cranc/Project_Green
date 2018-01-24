@@ -5,6 +5,7 @@ import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { error } from 'util';
+import { Plant } from '../../app/classes/Plant';
 
 @Component({
   selector: 'page-home',
@@ -32,7 +33,8 @@ export class HomePage {
       .then(res => {
         console.log(res);
         //console.log(res.user.uid);
-        this.db.addUserToDatabase(res.user.displayName,"","",res.user.uid);
+        //this.db.addUserToDatabase(res.user.displayName,"","",res.user.uid);
+        //this.db.addPlantToDatabase(new Plant(0,"testplant","this is a test plant", 0,0,2.64,2.54));
       }, error => {
         console.log("could not auth");
       })

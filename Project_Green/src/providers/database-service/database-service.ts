@@ -5,6 +5,7 @@ import {AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databas
 import { query } from '@angular/core/src/animation/dsl';
 import { error } from 'util';
 import { User } from '../../app/classes/user';
+import { Plant } from '../../app/classes/plant';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -55,6 +56,13 @@ export class DatabaseServiceProvider {
    */
   public listPlantSubGroup() : FirebaseListObservable<any[]>{
     return this._db.list('/plantproperties/plantsubgroup');
+  }
+
+  /**
+   * Connects to the Database and returns a List of all Plant Objects.
+   */
+  public listPlants() : FirebaseListObservable<Plant[]>{
+    return this._db.list('/plants');
   }
 
   /**
@@ -109,5 +117,13 @@ export class DatabaseServiceProvider {
       });
       console.log(this.i);
       */
+  }
+
+  /**
+   * Adds a new Plant to the database.
+   * @param plant plant to add
+   */
+  public addPlantToDatabase(plant : Plant){
+    this.listPlants().push(plant);
   }
 }

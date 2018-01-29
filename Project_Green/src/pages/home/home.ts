@@ -4,8 +4,8 @@ import { DatabaseServiceProvider } from '../../providers/database-service/databa
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { error } from 'util';
-import { Plant } from '../../app/classes/Plant';
+import { MailAuthPage } from '../mail-auth/mail-auth';
+import { ModalController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -17,13 +17,41 @@ export class HomePage {
   plantgroup : FirebaseListObservable<any[]>;
   plantsubgroup : FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, public db:DatabaseServiceProvider, public auth:AngularFireAuth) {
+  constructor(public navCtrl: NavController, public db:DatabaseServiceProvider, public auth:AngularFireAuth, public modalCtrl : ModalController) {
     this.accounts = this.db.listAccounts();
     this.blossomcolor = this.db.listBlossomColor();
     this.plantgroup = this.db.listPlantGroup();
     this.plantsubgroup = this.db.listPlantSubGroup();
   }
 
+  /**
+   * Signs into the Database with a Mail and Password (that is already in the user base)
+   */
+  public signInWithMail() {
+    var modal = this.modalCtrl.create(MailAuthPage);
+    modal.onDidDismiss(data => {
+      if(data.apply == false)
+        return;
+      this.auth.auth.signInWithEmailAndPassword(data.mail, data.password)
+        .then( res => {
+          console.log(res);
+        },
+        error => {
+          //todo correct error handling
+          console.log(error);
+          this.signInWithMail();
+        });
+    });
+
+    modal.present();
+    /*this.auth.auth
+    .signInWithPopup(new firebase.auth.EmailAuthProvider())
+    .then(res => {
+      console.log(res);
+    }, error => {
+      console.log("could not auth with mail");
+    });*/
+  }
   /**
    * Signs into the Database with a GitHub account
    */
@@ -37,7 +65,7 @@ export class HomePage {
         //this.db.addPlantToDatabase(new Plant(0,"testplant","this is a test plant", 0,0,2.64,2.54));
       }, error => {
         console.log("could not auth");
-      })
+      });
   }
 
   /**

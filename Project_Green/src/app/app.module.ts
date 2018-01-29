@@ -7,6 +7,8 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { MailAuthPage } from '../pages/mail-auth/mail-auth';
+import { MailCreateAccountPage } from '../pages/mail-create-account/mail-create-account';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -33,7 +35,9 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    MailAuthPage,
+    MailCreateAccountPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    MailAuthPage,
+    MailCreateAccountPage
   ],
   providers: [
     StatusBar,

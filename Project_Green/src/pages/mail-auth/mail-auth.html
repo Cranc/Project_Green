@@ -1,0 +1,44 @@
+<!--
+  Generated template for the MailAuthPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login with Mail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label color="primary" stacked>Email</ion-label>
+            <ion-input type="email" [(ngModel)]="mail" placeholder="Email Input"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password" placeholder="Password Input"></ion-input>
+        </ion-item>
+
+
+    </ion-list>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="applyModal()">Apply</button>
+        </div>
+    </div>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="closeModal()">Close</button>
+        </div>
+    </div>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="createAccount()">No Account? Register here</button>
+        </div>
+    </div>
+</ion-content>

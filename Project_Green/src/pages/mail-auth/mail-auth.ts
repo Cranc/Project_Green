@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { MailCreateAccountPage } from '../mail-create-account/mail-create-account';
 import { ModalController } from 'ionic-angular';
@@ -29,6 +29,9 @@ export class MailAuthPage {
     console.log('ionViewDidLoad MailAuthPage');
   }
 
+  /**
+   * Closes Modal with a do not apply message.
+   */
   public closeModal() {
     var item = {
       mail : this.mail,
@@ -38,6 +41,9 @@ export class MailAuthPage {
     this.viewCtrl.dismiss(item);
   }
 
+  /**
+   * Closes Modal with a do apply message
+   */
   public applyModal() {
     var item = {
       mail : this.mail,
@@ -47,6 +53,9 @@ export class MailAuthPage {
     this.viewCtrl.dismiss(item);
   }
 
+  /**
+   * Opens a new modal for the creation of a new account.
+   */
   public createAccount() {
     var modal = this.modalCtrl.create(MailCreateAccountPage);
     modal.present();

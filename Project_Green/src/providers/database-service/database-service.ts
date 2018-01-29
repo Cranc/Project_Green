@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { query } from '@angular/core/src/animation/dsl';
-import { error } from 'util';
 import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
 //import { database } from 'firebase/app';

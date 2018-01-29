@@ -4,8 +4,6 @@ import { DatabaseServiceProvider } from '../../providers/database-service/databa
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { error } from 'util';
-import { Plant } from '../../app/classes/Plant';
 import { MailAuthPage } from '../mail-auth/mail-auth';
 import { ModalController } from 'ionic-angular';
 

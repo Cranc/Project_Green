@@ -30,6 +30,9 @@ export class MailCreateAccountPage {
     console.log('ionViewDidLoad MailCreateAccountPage');
   }
 
+  /**
+   * Closes Modal with a do not apply message.
+   */
   public closeModal() {
     var item = {
       mail : this.form.get('mail'),
@@ -40,6 +43,9 @@ export class MailCreateAccountPage {
     this.viewCtrl.dismiss(item);
   }
 
+  /**
+   * Closes Modal with a do apply message.
+   */
   public applyModal() {
     var item = {
       mail : this.form.get('mail'),
@@ -50,6 +56,10 @@ export class MailCreateAccountPage {
     this.viewCtrl.dismiss(item);
   }
 
+  /**
+   * Checks if password is matched to the validation of the password.
+   * @param cg formGroup that contains at least the two pw fields (pwd1, pwd2).
+   */
   static passwordsMatch(cg: FormGroup): {[err: string]: any} {
     let pwd1 = cg.get('pwd1');
     let pwd2 = cg.get('pwd2');
@@ -60,6 +70,9 @@ export class MailCreateAccountPage {
     return rv;
   }
 
+  /**
+   * logForm that logs the values of the formGroup.
+   */
   public logForm(){
     console.log(this.form.value);
   }

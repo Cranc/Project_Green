@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
+import { MailCreateAccountPage } from '../mail-create-account/mail-create-account';
+import { ModalController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
  * Generated class for the MailAuthPage page.
@@ -19,7 +22,7 @@ export class MailAuthPage {
   public password: string;
   public apply: boolean;
 
-  constructor(public viewCtrl : ViewController, public navParams: NavParams) {
+  constructor(public viewCtrl : ViewController, public navParams: NavParams, public modalCtrl : ModalController, public auth : AngularFireAuth) {
   }
 
   ionViewDidLoad() {
@@ -27,14 +30,38 @@ export class MailAuthPage {
   }
 
   public closeModal() {
-    this.viewCtrl.dismiss();
+    var item = {
+      mail : this.mail,
+      password : this.password,
+      apply: false
+    }
+    this.viewCtrl.dismiss(item);
   }
 
   public applyModal() {
     var item = {
       mail : this.mail,
-      password : this.password
+      password : this.password,
+      apply: true
     }
     this.viewCtrl.dismiss(item);
+  }
+
+  public createAccount() {
+    var modal = this.modalCtrl.create(MailCreateAccountPage);
+    modal.present();
+    modal.onDidDismiss(data => {
+      if(data.apply == false)
+        return;
+      console.log(data);
+      this.auth.auth.createUserWithEmailAndPassword(data.mail.value, data.password.value)
+      .then(res => {
+        console.log(res);
+      },
+      error => {
+        //todo correct error handling
+        console.log(error);
+      });
+    });
   }
 }

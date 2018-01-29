@@ -32,6 +32,8 @@ export class HomePage {
   public signInWithMail() {
     var modal = this.modalCtrl.create(MailAuthPage);
     modal.onDidDismiss(data => {
+      if(data.apply == false)
+        return;
       this.auth.auth.signInWithEmailAndPassword(data.mail, data.password)
         .then( res => {
           console.log(res);

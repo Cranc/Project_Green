@@ -23,8 +23,22 @@
             <ion-label color="primary" stacked>Password</ion-label>
             <ion-input type="password" [(ngModel)]="password" placeholder="Password Input"></ion-input>
         </ion-item>
-        <button ion-button (click)="applyModal()">Apply</button>
-        <button ion-button (click)="closeModal()">Close</button>
-    </ion-list>
 
+
+    </ion-list>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="applyModal()">Apply</button>
+        </div>
+    </div>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="closeModal()">Close</button>
+        </div>
+    </div>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="createAccount()">No Account? Register here</button>
+        </div>
+    </div>
 </ion-content>

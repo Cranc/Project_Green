@@ -1,0 +1,66 @@
+import { Component } from '@angular/core';
+import { ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+
+/**
+ * Generated class for the MailCreateAccountPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-mail-create-account',
+  templateUrl: 'mail-create-account.html',
+})
+export class MailCreateAccountPage {
+  form: FormGroup;
+
+  constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder) {
+    this.form = fb.group({
+      'mail': ['', Validators.compose([Validators.required, Validators.email])],
+      'pwd1': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      'pwd2': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+    }, {validator: MailCreateAccountPage.passwordsMatch});
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad MailCreateAccountPage');
+  }
+
+  public closeModal() {
+    var item = {
+      mail : this.form.get('mail'),
+      password : this.form.get('pwd1'),
+      apply : false
+    };
+    console.log(item);
+    this.viewCtrl.dismiss(item);
+  }
+
+  public applyModal() {
+    var item = {
+      mail : this.form.get('mail'),
+      password : this.form.get('pwd1'),
+      apply : true
+    };
+    console.log(item);
+    this.viewCtrl.dismiss(item);
+  }
+
+  static passwordsMatch(cg: FormGroup): {[err: string]: any} {
+    let pwd1 = cg.get('pwd1');
+    let pwd2 = cg.get('pwd2');
+    let rv: {[error: string]: any} = {};
+    if ((pwd1.touched || pwd2.touched) && pwd1.value !== pwd2.value) {
+      rv['passwordMismatch'] = true;
+    }
+    return rv;
+  }
+
+  public logForm(){
+    console.log(this.form.value);
+  }
+}

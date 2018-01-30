@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
  * Generated class for the MailCreateAccountPage page.
@@ -18,7 +19,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class MailCreateAccountPage {
   form: FormGroup;
 
-  constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder) {
+  constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, private auth : AngularFireAuth) {
     this.form = fb.group({
       'mail': ['', Validators.compose([Validators.required, Validators.email])],
       'pwd1': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
@@ -34,26 +35,24 @@ export class MailCreateAccountPage {
    * Closes Modal with a do not apply message.
    */
   public closeModal() {
-    var item = {
-      mail : this.form.get('mail'),
-      password : this.form.get('pwd1'),
-      apply : false
-    };
-    console.log(item);
-    this.viewCtrl.dismiss(item);
+    this.viewCtrl.dismiss(false);
   }
 
   /**
    * Closes Modal with a do apply message.
    */
   public applyModal() {
-    var item = {
-      mail : this.form.get('mail'),
-      password : this.form.get('pwd1'),
-      apply : true
-    };
-    console.log(item);
-    this.viewCtrl.dismiss(item);
+    let email = this.form.get('mail');
+    let pwd = this.form.get('pwd1');
+    this.auth.auth.createUserWithEmailAndPassword(email.value, pwd.value)
+      .then(res => {
+        console.log(res);
+      },
+      error => {
+        //todo correct error handling
+        console.log(error);
+    });
+    this.viewCtrl.dismiss(true);
   }
 
   /**

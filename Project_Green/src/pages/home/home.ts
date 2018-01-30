@@ -29,28 +29,7 @@ export class HomePage {
    */
   public signInWithMail() {
     var modal = this.modalCtrl.create(MailAuthPage);
-    modal.onDidDismiss(data => {
-      if(data.apply == false)
-        return;
-      this.auth.auth.signInWithEmailAndPassword(data.mail, data.password)
-        .then( res => {
-          console.log(res);
-        },
-        error => {
-          //todo correct error handling
-          console.log(error);
-          this.signInWithMail();
-        });
-    });
-
     modal.present();
-    /*this.auth.auth
-    .signInWithPopup(new firebase.auth.EmailAuthProvider())
-    .then(res => {
-      console.log(res);
-    }, error => {
-      console.log("could not auth with mail");
-    });*/
   }
   /**
    * Signs into the Database with a GitHub account

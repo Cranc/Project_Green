@@ -19,7 +19,7 @@ export class DatabaseServiceProvider {
 
   i: number;
 
-  constructor(private _af: AngularFireAuth, private _db: AngularFireDatabase) {
+  constructor(private _af: AngularFireAuth, private _db: AngularFireDatabase, private auth:AngularFireAuth) {
     //af.auth.signInWithPopup;
     _af.authState;
     console.log('Hello DatabaseServiceProvider Provider');
@@ -116,6 +116,7 @@ export class DatabaseServiceProvider {
       });
       console.log(this.i);
       */
+      console.log(this.auth.auth.currentUser);
   }
 
   /**

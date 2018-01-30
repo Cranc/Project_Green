@@ -4,6 +4,7 @@ import { ViewController } from 'ionic-angular';
 import { MailCreateAccountPage } from '../mail-create-account/mail-create-account';
 import { ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the MailAuthPage page.
@@ -18,11 +19,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'mail-auth.html',
 })
 export class MailAuthPage {
-  public mail: string;
-  public password: string;
-  public apply: boolean;
+  private form: FormGroup;
 
-  constructor(public viewCtrl : ViewController, public navParams: NavParams, public modalCtrl : ModalController, public auth : AngularFireAuth) {
+  constructor(private viewCtrl : ViewController, private navParams: NavParams, private modalCtrl : ModalController, private auth : AngularFireAuth, private fb: FormBuilder) {
+    this.form = fb.group({
+      'mail': ['', Validators.compose([Validators.required, Validators.email])],
+      'pwd': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+    });
   }
 
   ionViewDidLoad() {
@@ -33,24 +36,25 @@ export class MailAuthPage {
    * Closes Modal with a do not apply message.
    */
   public closeModal() {
-    var item = {
-      mail : this.mail,
-      password : this.password,
-      apply: false
-    }
-    this.viewCtrl.dismiss(item);
+    this.viewCtrl.dismiss(false);
   }
 
   /**
    * Closes Modal with a do apply message
    */
   public applyModal() {
-    var item = {
-      mail : this.mail,
-      password : this.password,
-      apply: true
-    }
-    this.viewCtrl.dismiss(item);
+    let email = this.form.get('mail');
+    let pwd = this.form.get('pwd');
+    this.auth.auth.signInWithEmailAndPassword(email.value, pwd.value)
+    .then( res => {
+      console.log(res);
+    },
+    error => {
+      //todo correct error handling
+      console.log(error);
+    });
+
+    this.viewCtrl.dismiss(true);
   }
 
   /**
@@ -59,18 +63,12 @@ export class MailAuthPage {
   public createAccount() {
     var modal = this.modalCtrl.create(MailCreateAccountPage);
     modal.present();
-    modal.onDidDismiss(data => {
-      if(data.apply == false)
-        return;
-      console.log(data);
-      this.auth.auth.createUserWithEmailAndPassword(data.mail.value, data.password.value)
-      .then(res => {
-        console.log(res);
-      },
-      error => {
-        //todo correct error handling
-        console.log(error);
-      });
-    });
+  }
+
+  /**
+   * logForm that logs the values of the formGroup.
+   */
+  public logForm(){
+    console.log(this.form.value);
   }
 }

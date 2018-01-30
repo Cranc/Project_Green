@@ -15,15 +15,16 @@
 
 <ion-content padding>
     <ion-list>
+        <form [formGroup]="form" (ngSubmit)="logForm()">
         <ion-item>
             <ion-label color="primary" stacked>Email</ion-label>
-            <ion-input type="email" [(ngModel)]="mail" placeholder="Email Input"></ion-input>
+            <ion-input type="email" formControlName="mail" placeholder="Email Input"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Password</ion-label>
-            <ion-input type="password" [(ngModel)]="password" placeholder="Password Input"></ion-input>
+            <ion-input type="password" formControlName="pwd" [(ngModel)]="password" placeholder="Password Input"></ion-input>
         </ion-item>
-
+        </form>
 
     </ion-list>
     <div class="row" text-center>

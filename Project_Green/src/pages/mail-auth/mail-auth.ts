@@ -20,12 +20,15 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MailAuthPage {
   private form: FormGroup;
+  private failed_login: boolean;
+  private failed_login_msg: string;
 
   constructor(private viewCtrl : ViewController, private navParams: NavParams, private modalCtrl : ModalController, private auth : AngularFireAuth, private fb: FormBuilder) {
     this.form = fb.group({
       'mail': ['', Validators.compose([Validators.required, Validators.email])],
       'pwd': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
     });
+    this.failed_login = false;
   }
 
   ionViewDidLoad() {
@@ -48,13 +51,16 @@ export class MailAuthPage {
     this.auth.auth.signInWithEmailAndPassword(email.value, pwd.value)
     .then( res => {
       console.log(res);
+      this.viewCtrl.dismiss(true);
     },
     error => {
       //todo correct error handling
+      this.failed_login = true;
+      this.failed_login_msg = error.message;
       console.log(error);
     });
 
-    this.viewCtrl.dismiss(true);
+
   }
 
   /**

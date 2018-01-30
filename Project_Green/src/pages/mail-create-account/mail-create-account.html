@@ -29,6 +29,10 @@
             <ion-input type="password" formControlName="pwd2" placeholder="Password Input"></ion-input>
         </ion-item>
     </ion-list>
+    <div class="error-box" *ngIf="form.controls['mail'].hasError('required') && form.controls['mail'].touched">* Email is required!</div>
+    <div class="error-box" *ngIf="form.controls['pwd1'].hasError('minlength') && form.controls['pwd1'].touched">* Minimum username length is 6!</div>
+    <div class="error-box" *ngIf="((form.controls['pwd1'].touched || form.controls['pwd2'].touched) && form.controls['pwd1'].value !== form.controls['pwd2'].value)">* Password needs to match!</div>
+    <br/>
     <div class="row" text-center>
         <div class="col" >
             <button ion-button (click)="applyModal()" [disabled]="!form.valid">Apply</button>

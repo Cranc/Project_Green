@@ -18,6 +18,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class MailCreateAccountPage {
   form: FormGroup;
+  failed_creation: boolean;
+  failed_creation_msg: string;
 
   constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, private auth : AngularFireAuth) {
     this.form = fb.group({
@@ -25,6 +27,7 @@ export class MailCreateAccountPage {
       'pwd1': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       'pwd2': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     }, {validator: MailCreateAccountPage.passwordsMatch});
+    this.failed_creation = false;
   }
 
   ionViewDidLoad() {
@@ -47,12 +50,14 @@ export class MailCreateAccountPage {
     this.auth.auth.createUserWithEmailAndPassword(email.value, pwd.value)
       .then(res => {
         console.log(res);
+        this.viewCtrl.dismiss(true);
       },
       error => {
         //todo correct error handling
         console.log(error);
+        this.failed_creation = true;
+        this.failed_creation_msg = error.message;
     });
-    this.viewCtrl.dismiss(true);
   }
 
   /**

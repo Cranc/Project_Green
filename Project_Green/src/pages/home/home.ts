@@ -35,9 +35,7 @@ export class HomePage {
       .signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then(res => {
         console.log(res);
-        //console.log(res.user.uid);
-        //this.db.addUserToDatabase(res.user.displayName,"","",res.user.uid);
-        //this.db.addPlantToDatabase(new Plant(0,"testplant","this is a test plant", 0,0,2.64,2.54));
+        this.db.addUserToDatabase(); //adds the user to the database if he doesnt already exists
       }, error => {
         console.log("could not auth");
       });

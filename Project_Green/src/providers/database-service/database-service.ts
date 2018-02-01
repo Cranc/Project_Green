@@ -137,7 +137,29 @@ export class DatabaseServiceProvider {
    * @param lastname lastname
    * @param uid user id
    */
-  public addUserToDatabase(nick : string, name : string, lastname : string ,uid : number) {
+  //public addUserToDatabase(nick : string, name : string, lastname : string ,uid : number)
+  public addUserToDatabase() {
+    let users = this._db.list('/users',{
+      query : {
+        orderByChild : 'id',
+        equalTo: this._af.auth.currentUser.uid
+      }
+    });
+    users.subscribe((response) => {
+      if(response.length == 0){
+        console.log("no user found");
+        let user = new User(
+          this._af.auth.currentUser.uid,
+          this._af.auth.currentUser.displayName,
+          "",
+          "",
+          this._af.auth.currentUser.email
+        )
+        this.listAccounts().push(user);
+      } else {
+        console.log("user found")
+      }
+    })
 
     /*var users = this._db.list('/users/*', {
       query:

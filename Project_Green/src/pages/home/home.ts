@@ -14,14 +14,10 @@ import { ModalController } from 'ionic-angular';
 export class HomePage {
   accounts : FirebaseListObservable<any[]>;
   blossomcolor : FirebaseListObservable<any[]>;
-  plantgroup : FirebaseListObservable<any[]>;
-  plantsubgroup : FirebaseListObservable<any[]>;
 
   constructor(public navCtrl: NavController, public db:DatabaseServiceProvider, public auth:AngularFireAuth, public modalCtrl : ModalController) {
     this.accounts = this.db.listAccounts();
     this.blossomcolor = this.db.listBlossomColor();
-    this.plantgroup = this.db.listPlantGroup();
-    this.plantsubgroup = this.db.listPlantSubGroup();
   }
 
   /**

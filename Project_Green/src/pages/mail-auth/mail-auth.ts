@@ -5,6 +5,7 @@ import { MailCreateAccountPage } from '../mail-create-account/mail-create-accoun
 import { ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 
 /**
  * Generated class for the MailAuthPage page.
@@ -23,7 +24,7 @@ export class MailAuthPage {
   private failed_login: boolean;
   private failed_login_msg: string;
 
-  constructor(private viewCtrl : ViewController, private navParams: NavParams, private modalCtrl : ModalController, private auth : AngularFireAuth, private fb: FormBuilder) {
+  constructor(public db:DatabaseServiceProvider, private viewCtrl : ViewController, private navParams: NavParams, private modalCtrl : ModalController, private auth : AngularFireAuth, private fb: FormBuilder) {
     this.form = fb.group({
       'mail': ['', Validators.compose([Validators.required, Validators.email])],
       'pwd': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
@@ -51,6 +52,7 @@ export class MailAuthPage {
     this.auth.auth.signInWithEmailAndPassword(email.value, pwd.value)
     .then( res => {
       console.log(res);
+      this.db.addUserToDatabase(); //adds the user to the database if he doesnt already exists
       this.viewCtrl.dismiss(true);
     },
     error => {

@@ -132,12 +132,8 @@ export class DatabaseServiceProvider {
 
   /**
    * Todo Connect to the database check if user already part of database if not add user
-   * @param nick nickname of user
-   * @param name name
-   * @param lastname lastname
-   * @param uid user id
+   *
    */
-  //public addUserToDatabase(nick : string, name : string, lastname : string ,uid : number)
   public addUserToDatabase() {
     let users = this._db.list('/users',{
       query : {
@@ -160,51 +156,7 @@ export class DatabaseServiceProvider {
         console.log("user found")
       }
     })
-
-    /*var users = this._db.list('/users/*', {
-      query:
-      {
-        orderByChild : '/id',
-        equalTo : uid
-      },
-      preserveSnapshot : true
-    });*/
-
-    /*
-    var users = this.listAccounts();
-    this.i = 0;
-
-    console.log(users);
-    let request = users.forEach((user) => {
-      console.log(user);
-      console.log(this.i);
-      if(user[0].id == 1)
-      this.i++;
-
-      console.log(this.i);
-      //console.log("found something [" + i + "]");
-    })
-    .then(res => {
-      console.log(this.i);
-      console.log("here now");
-        if(this.i === 0){
-          console.log("add new user");
-          var user = new User(uid,nick,name,lastname);
-          {
-            "nick" : nick,
-            "id" : uid,
-            "name" : name,
-            "lastname" : lastname
-          }
-          this.listAccounts().push(user);
-          return;
-        }
-      }, error => {
-        console.log("error while trying to determin user!");
-      });
-      console.log(this.i);
-      */
-      console.log(this.auth.auth.currentUser);
+    console.log(this.auth.auth.currentUser);
   }
 
   /**

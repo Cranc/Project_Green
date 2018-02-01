@@ -167,4 +167,21 @@ export class DatabaseServiceProvider {
   public addUserPlantToDatabase(plant : Plant){
     this.listUserPlants().push(plant);
   }
+
+  /**
+   * Connects to the Database and returns a List of all Parent_Plant Objects.
+   */
+  public listParentPlants() : FirebaseListObservable<Parent_Plant[]>{
+    return this._db.list('/parent-plant');
+  }
+
+  /**
+   * Adds a new Parent_Plant to the database (ONLY MEANT TO FILL THE DATABASE INITIALLY).
+   * @param plant the parent plant to add to the lexicon.
+   */
+  private addDatabasePlantToDatabase(plant : Parent_Plant){
+
+    let ref = this.listParentPlants().push(plant);
+    ref.update({"id" : ref.key});
+  }
 }

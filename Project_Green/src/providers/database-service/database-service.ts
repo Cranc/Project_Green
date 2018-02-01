@@ -5,6 +5,7 @@ import {AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databas
 import { query } from '@angular/core/src/animation/dsl';
 import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
+import { Parent_Plant } from '../../app/classes/parent_plant';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -163,7 +164,7 @@ export class DatabaseServiceProvider {
    * Adds a new Plant to the database.
    * @param plant plant to add
    */
-  public addPlantToDatabase(plant : Plant){
-    this.listPlants().push(plant);
+  public addUserPlantToDatabase(plant : Plant){
+    this.listUserPlants().push(plant);
   }
 }

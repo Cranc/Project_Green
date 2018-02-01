@@ -39,28 +39,94 @@ export class DatabaseServiceProvider {
     return this._db.list('/plantproperties');
   }
   /**
-   * Conencts to the Database and returns a List of all BlossomColor Objects.
+   * Conencts to the Database and returns a List of all Blossom color Objects.
    */
   public listBlossomColor() : FirebaseListObservable<any[]>{
-    return this._db.list('/plantproperties/blossomcolor');
+    return this._db.list('/plantproperties/blossom-color');
   }
   /**
-   * Conencts to the Database and returns a List of all Plant Group Objects.
+   * Conencts to the Database and returns a List of all Blossom shape Objects.
    */
-  public listPlantGroup() : FirebaseListObservable<any[]>{
-    return this._db.list('/plantproperties/plantgroup');
+  public listBlossomShape() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/blossom-shape');
   }
   /**
-   * Conencts to the Database and returns a List of all Plant Sub Group Objects.
+   * Conencts to the Database and returns a List of all fruit color Objects.
    */
-  public listPlantSubGroup() : FirebaseListObservable<any[]>{
-    return this._db.list('/plantproperties/plantsubgroup');
+  public listFruitColor() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/fruit-color');
+  }
+  /**
+   * Conencts to the Database and returns a List of all inflorescence Objects.
+   */
+  public listInflorescence() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/inflorescence');
+  }
+  /**
+   * Conencts to the Database and returns a List of all leaf blade Objects.
+   */
+  public listLeafBlade() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/leaf-blade');
+  }
+  /**
+   * Conencts to the Database and returns a List of all leaf edge Objects.
+   */
+  public listLeafEdge() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/leaf-edge');
+  }
+  /**
+   * Conencts to the Database and returns a List of all leaf nerve Objects.
+   */
+  public listLeafNerves() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/leaf-nerves');
+  }
+  /**
+   * Conencts to the Database and returns a List of all leaf presentation Objects.
+   */
+  public listLeafPresentation() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/leaf-presentation');
+  }
+  /**
+   * Conencts to the Database and returns a List of all leaf shape Objects.
+   */
+  public listLeafShape() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/leaf-shape');
+  }
+  /**
+   * Conencts to the Database and returns a List of all location Objects.
+   */
+  public listLocation() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/location');
+  }
+  /**
+   * Conencts to the Database and returns a List of all plant blossom Objects.
+   */
+  public listPlantBlossoms() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/plant-blossoms');
+  }
+  /**
+   * Conencts to the Database and returns a List of all plant flowering time Objects.
+   */
+  public listPlantFloweringTime() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/plant-flowering-time');
+  }
+  /**
+   * Conencts to the Database and returns a List of all plant size Objects.
+   */
+  public listPlantSize() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/plant-size');
+  }
+  /**
+   * Conencts to the Database and returns a List of all plant blossom Objects.
+   */
+  public listPlantType() : FirebaseListObservable<any[]>{
+    return this._db.list('/plantproperties/plant-type');
   }
 
   /**
    * Connects to the Database and returns a List of all Plant Objects.
    */
-  public listPlants() : FirebaseListObservable<Plant[]>{
+  public listUserPlants() : FirebaseListObservable<Plant[]>{
     return this._db.list('/plants');
   }
 

@@ -24,6 +24,7 @@ export class DatabaseServiceProvider {
     //af.auth.signInWithPopup;
     _af.authState;
     console.log('Hello DatabaseServiceProvider Provider');
+    //this.initParentPlants();
   }
 
   /**
@@ -180,8 +181,19 @@ export class DatabaseServiceProvider {
    * @param plant the parent plant to add to the lexicon.
    */
   private addDatabasePlantToDatabase(plant : Parent_Plant){
-
     let ref = this.listParentPlants().push(plant);
     ref.update({"id" : ref.key});
+  }
+
+  /**
+   * function to fill Parent_Plant Lexicon (only use ONCE to fill database if empty)
+   */
+  public initParentPlants(){
+    var plant = new Parent_Plant(
+      "Schneeglöckchen",
+      "Schneeglöckchen-Arten sind ausdauernde krautige Pflanzen. Diese Geophyten bilden Zwiebeln als Überdauerungsorgane. Zwei bis – selten – drei parallelnervige Laubblätter stehen grundständig zusammen.",
+      [2], [0], [0,1], [0,1], [0], [0,3,4,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
+    );
+    this.addDatabasePlantToDatabase(plant);
   }
 }

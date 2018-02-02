@@ -4,38 +4,38 @@ export class Parent_Plant {
     name: string;
     desc: string;
     //ids
-    blossom_color_id: number;
-    blossom_shape_id: number;
-    fruit_color_id: number;
-    inflorescence_id: number;
-    leaf_blade_id: number;
-    leaf_edge_id: number;
-    leaf_nerves_id: number;
-    leaf_presentation_id: number;
-    leaf_shape_id: number;
-    location_id: number;
-    plant_blossoms_id: number;
-    plant_flowering_time_id: number;
-    plant_size_id: number;
-    plant_type_id: number;
+    blossom_color_id: number[];
+    blossom_shape_id: number[];
+    fruit_color_id: number[];
+    inflorescence_id: number[];
+    leaf_blade_id: number[];
+    leaf_edge_id: number[];
+    leaf_nerves_id: number[];
+    leaf_presentation_id: number[];
+    leaf_shape_id: number[];
+    location_id: number[];
+    plant_blossoms_id: number[];
+    plant_flowering_time_id: number[];
+    plant_size_id: number[];
+    plant_type_id: number[];
 
     constructor(
         name: string,
         desc: string,
-        blossom_color_id:           number,
-        blossom_shape_id:           number,
-        fruit_color_id:             number,
-        inflorescence_id:           number,
-        leaf_blade_id:              number,
-        leaf_edge_id:               number,
-        leaf_nerves_id:             number,
-        leaf_presentation_id:       number,
-        leaf_shape_id:              number,
-        location_id:                number,
-        plant_blossoms_id:          number,
-        plant_flowering_time_id:    number,
-        plant_size_id:              number,
-        plant_type_id:              number
+        plant_type_id:              number[],
+        blossom_color_id:           number[],
+        plant_size_id:              number[],
+        plant_flowering_time_id:    number[],
+        plant_blossoms_id:          number[],
+        location_id:                number[],
+        leaf_nerves_id:             number[],
+        leaf_blade_id:              number[],
+        leaf_presentation_id:       number[],
+        leaf_edge_id:               number[],
+        blossom_shape_id:           number[],
+        leaf_shape_id:              number[],
+        fruit_color_id:             number[],
+        inflorescence_id:           number[],
     )
         {
         //basics

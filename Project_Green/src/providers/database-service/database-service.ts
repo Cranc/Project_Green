@@ -5,6 +5,7 @@ import {AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databas
 import { query } from '@angular/core/src/animation/dsl';
 import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
+import { Parent_Plant } from '../../app/classes/parent_plant';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -23,6 +24,7 @@ export class DatabaseServiceProvider {
     //af.auth.signInWithPopup;
     _af.authState;
     console.log('Hello DatabaseServiceProvider Provider');
+    //this.initParentPlants();
   }
 
   /**
@@ -132,64 +134,66 @@ export class DatabaseServiceProvider {
 
   /**
    * Todo Connect to the database check if user already part of database if not add user
-   * @param nick nickname of user
-   * @param name name
-   * @param lastname lastname
-   * @param uid user id
+   *
    */
-  public addUserToDatabase(nick : string, name : string, lastname : string ,uid : number) {
-
-    /*var users = this._db.list('/users/*', {
-      query:
-      {
-        orderByChild : '/id',
-        equalTo : uid
-      },
-      preserveSnapshot : true
-    });*/
-
-    /*
-    var users = this.listAccounts();
-    this.i = 0;
-
-    console.log(users);
-    let request = users.forEach((user) => {
-      console.log(user);
-      console.log(this.i);
-      if(user[0].id == 1)
-      this.i++;
-
-      console.log(this.i);
-      //console.log("found something [" + i + "]");
+  public addUserToDatabase() {
+    let users = this._db.list('/users',{
+      query : {
+        orderByChild : 'id',
+        equalTo: this._af.auth.currentUser.uid
+      }
+    });
+    users.subscribe((response) => {
+      if(response.length == 0){
+        console.log("no user found");
+        let user = new User(
+          this._af.auth.currentUser.uid,
+          this._af.auth.currentUser.displayName,
+          "",
+          "",
+          this._af.auth.currentUser.email
+        )
+        this.listAccounts().push(user);
+      } else {
+        console.log("user found")
+      }
     })
-    .then(res => {
-      console.log(this.i);
-      console.log("here now");
-        if(this.i === 0){
-          console.log("add new user");
-          var user = new User(uid,nick,name,lastname);
-          {
-            "nick" : nick,
-            "id" : uid,
-            "name" : name,
-            "lastname" : lastname
-          }
-          this.listAccounts().push(user);
-          return;
-        }
-      }, error => {
-        console.log("error while trying to determin user!");
-      });
-      console.log(this.i);
-      */
-      console.log(this.auth.auth.currentUser);
+    console.log(this.auth.auth.currentUser);
   }
 
   /**
    * Adds a new Plant to the database.
    * @param plant plant to add
    */
-  public addPlantToDatabase(plant : Plant){
-    this.listPlants().push(plant);
+  public addUserPlantToDatabase(plant : Plant){
+    this.listUserPlants().push(plant);
+  }
+
+  /**
+   * Connects to the Database and returns a List of all Parent_Plant Objects.
+   */
+  public listParentPlants() : FirebaseListObservable<Parent_Plant[]>{
+    return this._db.list('/parent-plant');
+  }
+
+  /**
+   * Adds a new Parent_Plant to the database (ONLY MEANT TO FILL THE DATABASE INITIALLY).
+   * @param plant the parent plant to add to the lexicon.
+   */
+  private addDatabasePlantToDatabase(plant : Parent_Plant){
+    let ref = this.listParentPlants().push(plant);
+    ref.update({"id" : ref.key});
+  }
+
+  /**
+   * function to fill Parent_Plant Lexicon (only use ONCE to fill database if empty)
+   */
+  public initParentPlants(){
+    var plant = new Parent_Plant(
+      "Schneeglöckchen",
+      "Schneeglöckchen-Arten sind ausdauernde krautige Pflanzen. Diese Geophyten bilden Zwiebeln als Überdauerungsorgane. Zwei bis – selten – drei parallelnervige Laubblätter stehen grundständig zusammen.",
+      [2], [0], [0,1], [0,1], [0], [0,3,4,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
+    );
+    this.addDatabasePlantToDatabase(plant);
   }
 }

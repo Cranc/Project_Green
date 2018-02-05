@@ -18,8 +18,6 @@ import { Parent_Plant } from '../../app/classes/parent_plant';
 @Injectable()
 export class DatabaseServiceProvider {
 
-  i: number;
-
   constructor(private _af: AngularFireAuth, private _db: AngularFireDatabase, private auth:AngularFireAuth) {
     //af.auth.signInWithPopup;
     _af.authState;
@@ -148,7 +146,6 @@ export class DatabaseServiceProvider {
    */
   public addUserToDatabase(nickName = ""){
     let key = this._af.auth.currentUser.uid;
-    console.log(key);
     let user = this.listGetUser();
     var sub = user.subscribe((response) => {
       if(response.id == undefined){
@@ -252,7 +249,6 @@ export class DatabaseServiceProvider {
         console.log("could not find a user to update!");
         sub.unsubscribe();
       } else {
-        console.log(user);
         user.update({"name" : name});
         sub.unsubscribe();
       }
@@ -270,7 +266,6 @@ export class DatabaseServiceProvider {
         console.log("could not find a user to update!");
         sub.unsubscribe();
       } else {
-        console.log(response);
         user.update({"lastname" : lastname});
         sub.unsubscribe();
       }

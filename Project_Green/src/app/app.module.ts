@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { SettingsPage } from '../pages/settings/settings';
 import { MailAuthPage } from '../pages/mail-auth/mail-auth';
 import { MailCreateAccountPage } from '../pages/mail-create-account/mail-create-account';
 
@@ -36,6 +37,7 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
+    SettingsPage,
     MailAuthPage,
     MailCreateAccountPage
   ],
@@ -54,6 +56,7 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
+    SettingsPage,
     MailAuthPage,
     MailCreateAccountPage
   ],

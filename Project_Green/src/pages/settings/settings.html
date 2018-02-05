@@ -14,5 +14,35 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item>
+        <ion-label>Anzahl der Benutzer Pflanzen pro Seite</ion-label>
+        <ion-range min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="user_pagination_count" color="secondary">
+            <ion-label range-left>5</ion-label>
+            <ion-label range-right>40</ion-label>
+        </ion-range>
+    </ion-item>
 
+    <ion-item>
+        <ion-label>Anzahl der öffentlichen Pflanzen pro Seite</ion-label>
+        <ion-range min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="pagination_count" color="secondary">
+            <ion-label range-left>5</ion-label>
+            <ion-label range-right>40</ion-label>
+        </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+      <form [formGroup]="names">
+      <ion-item>
+          <ion-label stacked>Vornamen ändern</ion-label>
+          <ion-input type="text" formControlName="name" placeholder="Vorname"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label stacked>Nachnamen ändern</ion-label>
+          <ion-input type="text" formControlName="lastname" placeholder="Nachname"></ion-input>
+      </ion-item>
+      <button ion-button (click)="applyNames()" [disabled]="!((names.controls['lastname'].valid)||(names.controls['name'].valid))">Ändern</button>
+      </form>
+    </ion-list>
 </ion-content>

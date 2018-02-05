@@ -39,6 +39,7 @@ export class DatabaseServiceProvider {
    */
   public listGetUser(): FirebaseObjectObservable<User[]>{
     let key = this._af.auth.currentUser.uid;
+    //console.log(key);
     return this._db.object(`/users/${key}`);
   }
 
@@ -146,7 +147,36 @@ export class DatabaseServiceProvider {
    *
    */
   public addUserToDatabase(nickName = ""){
-    let users = this._db.list('/users',{
+    let key = this._af.auth.currentUser.uid;
+    console.log(key);
+    let user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.id == undefined){
+        console.log("could not find a user!");
+        let n_user = new User(
+          this._af.auth.currentUser.uid,
+          this._af.auth.currentUser.displayName,
+          "",
+          "",
+          this._af.auth.currentUser.email
+        )
+        if(nickName !== "")
+          n_user.nick = nickName;
+        user.set({
+          "id" : n_user.id,
+          "nick" : n_user.nick,
+          "name" : n_user.name,
+          "lastname" : n_user.lastname,
+          "mail" : n_user.mail
+        });
+        sub.unsubscribe();
+      } else {
+        console.log("user already exists!");
+        sub.unsubscribe();
+      }
+    })
+    /*
+    let users = this._db.list(`/users`,{
       query : {
         orderByChild : 'id',
         equalTo: this._af.auth.currentUser.uid
@@ -173,7 +203,7 @@ export class DatabaseServiceProvider {
         console.log("user found")
         sub.unsubscribe();
       }
-    })
+    })*/
     console.log(this.auth.auth.currentUser);
   }
 
@@ -222,6 +252,7 @@ export class DatabaseServiceProvider {
         console.log("could not find a user to update!");
         sub.unsubscribe();
       } else {
+        console.log(user);
         user.update({"name" : name});
         sub.unsubscribe();
       }
@@ -239,6 +270,7 @@ export class DatabaseServiceProvider {
         console.log("could not find a user to update!");
         sub.unsubscribe();
       } else {
+        console.log(response);
         user.update({"lastname" : lastname});
         sub.unsubscribe();
       }

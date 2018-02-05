@@ -3,6 +3,7 @@ import { ViewController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 
 /**
  * Generated class for the MailCreateAccountPage page.
@@ -21,8 +22,9 @@ export class MailCreateAccountPage {
   failed_creation: boolean;
   failed_creation_msg: string;
 
-  constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, private auth : AngularFireAuth) {
+  constructor(public viewCtrl : ViewController, public navCtrl: NavController, public navParams: NavParams, fb: FormBuilder, private auth : AngularFireAuth, private db: DatabaseServiceProvider) {
     this.form = fb.group({
+      'nick': ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       'mail': ['', Validators.compose([Validators.required, Validators.email])],
       'pwd1': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       'pwd2': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
@@ -50,6 +52,7 @@ export class MailCreateAccountPage {
     this.auth.auth.createUserWithEmailAndPassword(email.value, pwd.value)
       .then(res => {
         console.log(res);
+        this.db.addUserToDatabase(this.form.get('nick').value);
         this.viewCtrl.dismiss(true);
       },
       error => {

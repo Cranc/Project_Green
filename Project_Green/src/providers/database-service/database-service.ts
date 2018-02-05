@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectFactory, FirebaseObjectObservable } from 'angularfire2/database';
 import { query } from '@angular/core/src/animation/dsl';
 import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
@@ -33,6 +33,15 @@ export class DatabaseServiceProvider {
   public listAccounts(): FirebaseListObservable<any[]>{
     return this._db.list('/users');
   }
+
+  /**
+   * Connects to the Database and returns the user that is currently logged in (if he exists).
+   */
+  public listGetUser(): FirebaseObjectObservable<User[]>{
+    let key = this._af.auth.currentUser.uid;
+    return this._db.object(`/users/${key}`);
+  }
+
   /**
    * Conencts to the Database and returns a List of all PlantProperties Objects.
    * NOTE! The objects are of different types!
@@ -136,14 +145,14 @@ export class DatabaseServiceProvider {
    * Todo Connect to the database check if user already part of database if not add user
    *
    */
-  public addUserToDatabase() {
+  public addUserToDatabase(nickName = ""){
     let users = this._db.list('/users',{
       query : {
         orderByChild : 'id',
         equalTo: this._af.auth.currentUser.uid
       }
     });
-    users.subscribe((response) => {
+    var sub = users.subscribe((response) => {
       if(response.length == 0){
         console.log("no user found");
         let user = new User(
@@ -153,12 +162,87 @@ export class DatabaseServiceProvider {
           "",
           this._af.auth.currentUser.email
         )
+        console.log(nickName);
+        console.log(user);
+        if(nickName !== "")
+          user.nick = nickName;
+        console.log(user);
         this.listAccounts().push(user);
+        sub.unsubscribe();
       } else {
         console.log("user found")
+        sub.unsubscribe();
       }
     })
     console.log(this.auth.auth.currentUser);
+  }
+
+  /**
+   * Updates the Users Email with the given one
+   * @param email email to update
+   */
+  public updateUserEmail(email: string){
+    var user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.length == 0){
+        console.log("could not find a user to update!");
+        sub.unsubscribe();
+      } else {
+        user.update({"mail" : email});
+        sub.unsubscribe();
+      }
+    })
+  }
+
+  /**
+   * Updates the users nick name.
+   * @param name name to change
+   */
+  public updateUserNick(name: string){
+    var user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.length == 0){
+        console.log("could not find a user to update!");
+        sub.unsubscribe();
+      } else {
+        user.update({"nick" : name});
+        sub.unsubscribe();
+      }
+    })
+  }
+
+  /**
+   * Updates the Users name with the given one
+   * @param name
+   */
+  public updateUserName(name: string){
+    var user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.length == 0){
+        console.log("could not find a user to update!");
+        sub.unsubscribe();
+      } else {
+        user.update({"name" : name});
+        sub.unsubscribe();
+      }
+    })
+  }
+
+  /**
+   * Updates the Users lastname with the given one
+   * @param lastname
+   */
+  public updateUserLastname(lastname: string){
+    var user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.length == 0){
+        console.log("could not find a user to update!");
+        sub.unsubscribe();
+      } else {
+        user.update({"lastname" : lastname});
+        sub.unsubscribe();
+      }
+    })
   }
 
   /**
@@ -186,13 +270,25 @@ export class DatabaseServiceProvider {
   }
 
   /**
-   * function to fill Parent_Plant Lexicon (only use ONCE to fill database if empty)
+   * function to fill Parent_Plant Lexicon (DO NOT USE!!!)
    */
-  public initParentPlants(){
+  private initParentPlants(){
     var plant = new Parent_Plant(
       "Schneeglöckchen",
       "Schneeglöckchen-Arten sind ausdauernde krautige Pflanzen. Diese Geophyten bilden Zwiebeln als Überdauerungsorgane. Zwei bis – selten – drei parallelnervige Laubblätter stehen grundständig zusammen.",
       [2], [0], [0,1], [0,1], [0], [0,3,4,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
+    );
+    this.addDatabasePlantToDatabase(plant);
+    plant = new Parent_Plant(
+      "Märzenbecher",
+      "Die Frühlingsknotenblume ist eine ausdauernde krautige Pflanze, die Wuchshöhen von 10 bis 30 cm erreicht. Sie bildet unterirdische Zwiebeln als Überdauerungsorgane aus und zählt daher zu den Zwiebel-Geophyten.",
+      [2], [0,1], [0,1,2], [1], [3], [0,3,4,8,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
+    );
+    this.addDatabasePlantToDatabase(plant);
+    plant = new Parent_Plant(
+      "Vogelbeere",
+      "Die Vogelbeere, gemeinsprachlich häufiger die Eberesche oder der Vogelbeerbaum (Sorbus aucuparia), ist eine Pflanzenart aus der Gattung Mehlbeeren (Sorbus) innerhalb der Familie der Rosengewächse (Rosaceae).",
+      [0], [0], [3,4,5,6,7,8], [1,2], [2], [0,1,2,3,4,5,6,7,9,10], [0], [1], [2], [3], [0], [0], [6], [3]
     );
     this.addDatabasePlantToDatabase(plant);
   }

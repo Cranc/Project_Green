@@ -39,7 +39,7 @@ export class DatabaseServiceProvider {
    */
   public listGetUser(): FirebaseObjectObservable<User[]>{
     let key = this._af.auth.currentUser.uid;
-    return this._db.object('/users/${key}');
+    return this._db.object(`/users/${key}`);
   }
 
   /**
@@ -145,7 +145,7 @@ export class DatabaseServiceProvider {
    * Todo Connect to the database check if user already part of database if not add user
    *
    */
-  public addUserToDatabase() {
+  public addUserToDatabase(nickName = ""){
     let users = this._db.list('/users',{
       query : {
         orderByChild : 'id',
@@ -162,6 +162,11 @@ export class DatabaseServiceProvider {
           "",
           this._af.auth.currentUser.email
         )
+        console.log(nickName);
+        console.log(user);
+        if(nickName !== "")
+          user.nick = nickName;
+        console.log(user);
         this.listAccounts().push(user);
         sub.unsubscribe();
       } else {

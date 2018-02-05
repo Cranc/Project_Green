@@ -190,6 +190,23 @@ export class DatabaseServiceProvider {
   }
 
   /**
+   * Updates the users nick name.
+   * @param name name to change
+   */
+  public updateUserNick(name: string){
+    var user = this.listGetUser();
+    var sub = user.subscribe((response) => {
+      if(response.length == 0){
+        console.log("could not find a user to update!");
+        sub.unsubscribe();
+      } else {
+        user.update({"nick" : name});
+        sub.unsubscribe();
+      }
+    })
+  }
+
+  /**
    * Updates the Users name with the given one
    * @param name
    */

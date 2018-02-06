@@ -21,6 +21,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { DatabaseServiceProvider } from '../providers/database-service/database-service';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
   authDomain: "project-green-192912.firebaseapp.com",
@@ -47,6 +49,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

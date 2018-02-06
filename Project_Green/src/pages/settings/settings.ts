@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
+import { Settings } from '../../app/classes/settings';
 
 /**
  * Generated class for the SettingsPage page.
@@ -35,7 +36,8 @@ export class SettingsPage {
   public onPaginationChange() {
     //console.log(this.pagination_count);
     //toDO create Settings Class and add to publish
-    this.events.publish("settingsChanged",null);
+    var set = new Settings(this.pagination_count, this.user_pagination_count)
+    this.events.publish("settingsChanged", set);
   }
 
   public applyNames() {

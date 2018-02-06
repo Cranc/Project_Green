@@ -146,7 +146,7 @@ export class DatabaseServiceProvider {
    */
   public addUserToDatabase(nickName = ""){
     let key = this._af.auth.currentUser.uid;
-    let user = this.listGetUser();
+    /*let user = this.listGetUser();
     var sub = user.subscribe((response) => {
       if(response.id == undefined){
         console.log("could not find a user!");
@@ -171,14 +171,9 @@ export class DatabaseServiceProvider {
         console.log("user already exists!");
         sub.unsubscribe();
       }
-    })
-    /*
-    let users = this._db.list(`/users`,{
-      query : {
-        orderByChild : 'id',
-        equalTo: this._af.auth.currentUser.uid
-      }
-    });
+    })*/
+
+    let users = this._db.list(`/users/${key}`);
     var sub = users.subscribe((response) => {
       if(response.length == 0){
         console.log("no user found");
@@ -194,13 +189,14 @@ export class DatabaseServiceProvider {
         if(nickName !== "")
           user.nick = nickName;
         console.log(user);
-        this.listAccounts().push(user);
+        //this.listAccounts().push(user);
+        this.listGetUser().set(user);
         sub.unsubscribe();
       } else {
         console.log("user found")
         sub.unsubscribe();
       }
-    })*/
+    })
     console.log(this.auth.auth.currentUser);
   }
 

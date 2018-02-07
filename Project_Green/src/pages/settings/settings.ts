@@ -24,32 +24,52 @@ export class SettingsPage {
   pagination_count: number;
   user_pagination_count: number;
 
+  settings: Settings;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public fb : FormBuilder, public db : DatabaseServiceProvider, private storage: Storage) {
     this.names = fb.group({
       'name' : ['', Validators.compose([Validators.required,Validators.minLength(1)])],
       'lastname' : ['', Validators.compose([Validators.required,Validators.minLength(1)])]
     })
-    this.loadSettings().then((val) => {
-      console.log(val);
-      this.pagination_count = val.public_plant_pagination_count;
-      this.user_pagination_count = val.user_plant_pagination_count;
-      this.events.publish('settingsChanged', val);
-    });
 
+    this.initSettings();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }
 
+  /**
+   * Initializes the Settings of the app
+   */
+  private initSettings(){
+    this.settings = new Settings(10, 10, this.storage);
+    this.settings.load();
+    this.settings.load().then((val) => {
+      //console.log(val);
+      if(val == true) {
+        this.pagination_count = this.settings.public_plant_pagination_count;
+        this.user_pagination_count = this.settings.user_plant_pagination_count;
+      }
+      this.events.publish('settingsChanged', this.settings);
+    });
+  }
+
+  /**
+   * called when pagination settings are changed
+   */
   public onPaginationChange() {
     //console.log(this.pagination_count);
     //toDO create Settings Class and add to publish
-    var set = new Settings(this.pagination_count, this.user_pagination_count)
-    this.saveSettings();
-    this.events.publish("settingsChanged", set);
+    this.settings.public_plant_pagination_count = this.pagination_count;
+    this.settings.user_plant_pagination_count = this.user_pagination_count;
+    this.settings.save();
+    this.events.publish("settingsChanged", this.settings);
   }
 
+  /**
+   * called when apply button for name change is pressed
+   */
   public applyNames() {
     //console.log(this.names);
     if(this.names.get('name').valid)
@@ -57,29 +77,5 @@ export class SettingsPage {
 
     if(this.names.get('lastname').valid)
       this.db.updateUserLastname(this.names.get('lastname').value);
-  }
-
-  public saveSettings(){
-    this.storage.set('public_plant_pagination_count', this.pagination_count);
-    this.storage.set('user_plant_pagination_count', this.user_pagination_count);
-  }
-
-  public loadSettings() : Promise<Settings> {
-    return new Promise((resolve) => {
-      var set = new Settings();
-      this.storage.get('public_plant_pagination_count')
-      .then((val) => {
-        if(val)
-          set.public_plant_pagination_count = val;
-      })
-      .then(() => {
-        this.storage.get('user_plant_pagination_count')
-        .then((val) => {
-          if(val)
-            set.user_plant_pagination_count = val;
-        }).then(() => {resolve(set);})
-      })
-    });
-
   }
 }

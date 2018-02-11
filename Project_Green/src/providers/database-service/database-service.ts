@@ -284,6 +284,21 @@ export class DatabaseServiceProvider {
   }
 
   /**
+   * Connects to the Database and returns a List of Parent_Plant Object starting by the given key.
+   * @param offset number of items to return.
+   * @param key key to start at (Optional) not giving a key results in starting from begining.
+   */
+  public listParentPlantsFromTo(offset, key?): FirebaseListObservable<Parent_Plant[]>{
+    return this._db.list('/parent-plant',{
+      query: {
+        orderByKey: true,
+        startAt: key,
+        limitToFirst: offset + 1
+      }
+    })
+  }
+
+  /**
    * Adds a new Parent_Plant to the database (ONLY MEANT TO FILL THE DATABASE INITIALLY).
    * @param plant the parent plant to add to the lexicon.
    */

@@ -14,7 +14,19 @@
 
 
 <ion-content padding>
-    <ion-item class="text" *ngFor="let item of plants | async" (click)='itemClicked(item)'>
+    <ion-item class="text" *ngFor="let item of plants" (click)='itemClicked(item)'>
       {{item.name}}
     </ion-item>
+    <div class="row">
+      <div class="col">
+        <button ion-button (click)="prevPage()">Vorrige</button>
+      </div>
+      <div class="col">
+        <button ion-button (click)="nextPage()">Nächste</button>
+      </div>
+    </div>
+    <!--<ion-infinite-scroll
+    on-infinite="nextPage()"
+    distance="1%">
+  </ion-infinite-scroll>-->
 </ion-content>

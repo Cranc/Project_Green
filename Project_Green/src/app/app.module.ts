@@ -8,8 +8,10 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
+
 import { MailAuthPage } from '../pages/mail-auth/mail-auth';
 import { MailCreateAccountPage } from '../pages/mail-create-account/mail-create-account';
+import { PopoverPage } from '../pages/popover/popover';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -22,6 +24,7 @@ import { AngularFireModule } from 'angularfire2';
 import { DatabaseServiceProvider } from '../providers/database-service/database-service';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { DatabasePlantsPage } from '../pages/database-plants/database-plants';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
@@ -39,7 +42,9 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
+    DatabasePlantsPage,
     SettingsPage,
+    PopoverPage,
     MailAuthPage,
     MailCreateAccountPage
   ],
@@ -59,7 +64,9 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
+    DatabasePlantsPage,
     SettingsPage,
+    PopoverPage,
     MailAuthPage,
     MailCreateAccountPage
   ],

@@ -23,6 +23,7 @@ export class SettingsPage {
   names: FormGroup;
   pagination_count: number;
   user_pagination_count: number;
+  map_points: number;
 
   settings: Settings;
 
@@ -43,13 +44,14 @@ export class SettingsPage {
    * Initializes the Settings of the app
    */
   private initSettings(){
-    this.settings = new Settings(10, 10, this.storage);
+    this.settings = new Settings(this.storage);
     this.settings.load();
     this.settings.load().then((val) => {
       //console.log(val);
       if(val == true) {
         this.pagination_count = this.settings.public_plant_pagination_count;
         this.user_pagination_count = this.settings.user_plant_pagination_count;
+        this.map_points = this.settings.map_points;
       }
       this.events.publish('settingsChanged', this.settings);
     });
@@ -63,6 +65,15 @@ export class SettingsPage {
     //toDO create Settings Class and add to publish
     this.settings.public_plant_pagination_count = this.pagination_count;
     this.settings.user_plant_pagination_count = this.user_pagination_count;
+    this.settings.save();
+    this.events.publish("settingsChanged", this.settings);
+  }
+
+  /**
+   * called when number of map points are changed
+   */
+  public onMapCountChange() {
+    this.settings.map_points = this.map_points;
     this.settings.save();
     this.events.publish("settingsChanged", this.settings);
   }

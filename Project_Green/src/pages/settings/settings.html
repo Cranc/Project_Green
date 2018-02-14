@@ -30,6 +30,14 @@
             <ion-label range-right>40</ion-label>
         </ion-range>
     </ion-item>
+
+    <ion-item>
+        <ion-label>Maximale Coordinaten auf der Karte</ion-label>
+        <ion-range min="5" max="100" step="1" snaps="true" (ionChange)="onMapCountChange()" [(ngModel)]="map_points" color="secondary">
+            <ion-label range-left>5</ion-label>
+            <ion-label range-right>100</ion-label>
+        </ion-range>
+    </ion-item>
   </ion-list>
 
   <ion-list>

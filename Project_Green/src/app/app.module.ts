@@ -3,19 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+//Tabs
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 
+//Popoups
 import { MailAuthPage } from '../pages/mail-auth/mail-auth';
 import { MailCreateAccountPage } from '../pages/mail-create-account/mail-create-account';
 import { PopoverPage } from '../pages/popover/popover';
 
+//misc
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+//Firebase and Database stuff
 import { Firebase } from '@ionic-native/firebase'; // import Firebase
 import { HttpModule } from '@angular/http';
 import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
@@ -23,8 +27,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { DatabaseServiceProvider } from '../providers/database-service/database-service';
 
+//local storage
 import { IonicStorageModule } from '@ionic/storage';
 import { DatabasePlantsPage } from '../pages/database-plants/database-plants';
+
+//google maps
+import { Geolocation } from '@ionic-native/geolocation';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
@@ -75,6 +83,7 @@ const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseServiceProvider,
+    Geolocation
   ]
 })
 export class AppModule {}

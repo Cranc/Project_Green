@@ -141,6 +141,21 @@ export class DatabaseServiceProvider {
   }
 
   /**
+   * Connects to the Database and returns a list of all plants with the given id.
+   * @param offset amount of items to get
+   * @param plant_id id of the plant type
+   */
+  public listUserPlantsWithId(offset: number, plant_id: number) : FirebaseListObservable<Plant[]>{
+    return this._db.list('/plants',{
+      query: {
+        orderByChild: 'parent_plant_id',
+        equalTo: plant_id,
+        limitToFirst: offset + 1
+      }
+    })
+  }
+
+  /**
    * Todo Connect to the database check if user already part of database if not add user
    *
    */

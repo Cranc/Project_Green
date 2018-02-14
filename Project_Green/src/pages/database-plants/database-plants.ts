@@ -79,7 +79,7 @@ export class DatabasePlantsPage {
    */
   public loadMore(key?){
     if(this.offset === undefined){
-      this.settings = new Settings(10,10, this.storage);
+      this.settings = new Settings(this.storage);
       this.settings.load()
       .then((val) => {
         this.offset = this.settings.public_plant_pagination_count;

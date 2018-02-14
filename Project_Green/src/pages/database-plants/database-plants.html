@@ -15,6 +15,7 @@
 
 <ion-content padding>
     <ion-item class="text" *ngFor="let item of plants" (click)='itemClicked(item)'>
+      <ion-icon name="flower"></ion-icon>
       {{item.name}}
     </ion-item>
     <div class="row">

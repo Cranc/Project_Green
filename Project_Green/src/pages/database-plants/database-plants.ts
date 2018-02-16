@@ -61,7 +61,7 @@ export class DatabasePlantsPage {
   nextPage() {
     this.prevKeys.push(_.first(this.plants)['$key']) // set current key as pointer for previous page
     this.loadMore(this.nextKey)
-    console.log(this.prevKeys);
+    //console.log(this.prevKeys);
   }
 
   /**
@@ -85,19 +85,19 @@ export class DatabasePlantsPage {
         this.offset = this.settings.public_plant_pagination_count;
         this.db.listParentPlantsFromTo(this.offset, key).
         subscribe((plant) => {
-          console.log(plant);
+          //console.log(plant);
           this.plants = _.slice(plant, 0, this.offset);
           this.nextKey = _.get(plant[this.offset], '$key')
-          console.log(_.get(plant[this.offset], '$key'));
+          //console.log(_.get(plant[this.offset], '$key'));
         });
       })
     } else {
       this.db.listParentPlantsFromTo(this.offset, key).
       subscribe((plant) => {
-        console.log(plant);
+        //console.log(plant);
         this.plants = _.slice(plant, 0, this.offset);
         this.nextKey = _.get(plant[this.offset], '$key')
-        console.log(_.get(plant[this.offset], '$key'));
+        //console.log(_.get(plant[this.offset], '$key'));
       });
     }
   }

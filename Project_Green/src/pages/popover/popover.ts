@@ -1,6 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
+
+//Geolocation
+import { Geolocation } from '@ionic-native/geolocation';
+import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
+
+//Settings
+import { Settings } from '../../app/classes/settings';
+import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
+declare var google;
 
 /**
  * Generated class for the PopoverPage page.
@@ -12,24 +23,138 @@ import { ViewController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-popover',
-  template: `
-    <ion-list id="il1" (click)="close()">
-      <ion-list-header>{{header}}</ion-list-header>
-      <div>
-        {{msg}}
-      </div>
-    </ion-list>
-  `
+  templateUrl: 'popover.html',
+
 })
 export class PopoverPage {
   msg: string;
   header: string;
+  id: number;
+  //settings
+  settings: Settings;
 
-  constructor(public viewCtrl: ViewController) {
+  //map stuff
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  start = 'chicago, il';
+  end = 'chicago, il';
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  markers = [];
+
+  constructor(private storage: Storage, public events: Events, public viewCtrl: ViewController, public navCtrl: NavController, private geolocation: Geolocation, private db: DatabaseServiceProvider) {
     this.msg = this.viewCtrl.data.desc;
     this.header = this.viewCtrl.data.name;
+    this.id = this.viewCtrl.data.id;
+
+    this.settings = new Settings(this.storage);
+    this.settings.load();
+
+    this.events.subscribe('settingsChanged', (settings) => {
+      this.settings = settings;
+    });
   }
 
+  ionViewDidLoad(){
+    console.log("Popover was loaded!");
+    this.initMap();
+  }
+
+  /**
+   * initalizes the map.
+   */
+  initMap() {
+    console.log("here");
+    this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
+      let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
+      let image = 'assets/imgs/user_icon_small.png';
+      this.addMarker(mylocation, image);
+      this.map = new google.maps.Map(this.mapElement.nativeElement, {
+        zoom: 7,
+        center: mylocation
+      });
+
+      this.setMapOnAll(this.map);
+      this.directionsDisplay.setMap(this.map);
+    }, error => {
+      console.log(error);
+    });
+    console.log("here now");
+
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      console.log("here now okay");
+      this.deleteMarkers();
+      let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
+      let image = 'assets/imgs/user_icon_small.png';
+      this.addMarker(updatelocation,image);
+      this.getPlantLocations();
+      this.setMapOnAll(this.map);
+      this.directionsDisplay.setMap(this.map);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  /**
+   * gets plant locations and places the markers on the map.
+   */
+  public getPlantLocations() {
+    this.db.listUserPlantsWithId(this.settings.map_points,this.id).subscribe((val) => {
+      //this.clearMarkers();
+      val.forEach((value) => {
+        let updatelocation = new google.maps.LatLng(value.lat, value.lng);
+        let image = 'assets/imgs/map_icon_small.png';
+        this.addMarker(updatelocation, image);
+        //console.log(this.markers);
+      })
+    })
+  }
+
+  /**
+   * Adds a marker to the buffer.
+   * @param location location of the marker..
+   * @param image icon of the marker
+   */
+  addMarker(location, image) {
+    let marker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+      icon: image
+    });
+    this.markers.push(marker);
+    console.log("markers: " + marker);
+  }
+
+  /**
+   * adds markers from the buffer to the map.
+   * @param map map the marker are added to.
+   */
+  setMapOnAll(map) {
+    console.log(this.markers);
+    for (var i = 0; i < this.markers.length; i++) {
+      this.markers[i].setMap(map);
+    }
+  }
+
+  /**
+   * cleares all maps.
+   */
+  clearMarkers() {
+    this.setMapOnAll(null);
+  }
+
+  /**
+   * cleares the marker buffer and maps.
+   */
+  deleteMarkers() {
+    this.clearMarkers();
+    this.markers = [];
+  }
+
+  /**
+   * called when the popover should be closed.
+   */
   close() {
     this.viewCtrl.dismiss();
   }

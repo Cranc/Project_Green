@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Events } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
-import { Settings } from '../../app/classes/settings';
-import { Storage } from '@ionic/storage';
+
 import { resolve } from 'url';
+
+import { SettingsProvider } from '../../providers/settings/settings';
 
 /**
  * Generated class for the SettingsPage page.
@@ -25,9 +25,9 @@ export class SettingsPage {
   user_pagination_count: number;
   map_points: number;
 
-  settings: Settings;
+  //settings: Settings;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public fb : FormBuilder, public db : DatabaseServiceProvider, private storage: Storage) {
+  constructor(public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public db : DatabaseServiceProvider) {
     this.names = fb.group({
       'name' : ['', Validators.compose([Validators.required,Validators.minLength(1)])],
       'lastname' : ['', Validators.compose([Validators.required,Validators.minLength(1)])]
@@ -44,8 +44,7 @@ export class SettingsPage {
    * Initializes the Settings of the app
    */
   private initSettings(){
-    this.settings = new Settings(this.storage);
-    this.settings.load();
+    //this.settings = new Settings(this.storage);
     this.settings.load().then((val) => {
       //console.log(val);
       if(val == true) {
@@ -53,7 +52,6 @@ export class SettingsPage {
         this.user_pagination_count = this.settings.user_plant_pagination_count;
         this.map_points = this.settings.map_points;
       }
-      this.events.publish('settingsChanged', this.settings);
     });
   }
 
@@ -66,7 +64,6 @@ export class SettingsPage {
     this.settings.public_plant_pagination_count = this.pagination_count;
     this.settings.user_plant_pagination_count = this.user_pagination_count;
     this.settings.save();
-    this.events.publish("settingsChanged", this.settings);
   }
 
   /**
@@ -75,7 +72,6 @@ export class SettingsPage {
   public onMapCountChange() {
     this.settings.map_points = this.map_points;
     this.settings.save();
-    this.events.publish("settingsChanged", this.settings);
   }
 
   /**

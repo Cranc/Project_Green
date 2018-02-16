@@ -7,6 +7,8 @@ import { PopoverController } from 'ionic-angular';
 import { PopoverPage } from '../popover/popover';
 
 //setting stuff
+import { SettingsProvider } from '../../providers/settings/settings';
+
 import { Events } from 'ionic-angular';
 import { Settings } from '../../app/classes/settings';
 import { Storage } from '@ionic/storage';
@@ -27,17 +29,11 @@ import * as _ from "lodash";
 })
 export class DatabasePlantsPage {
   plants: any;
-  offset: number;
   nextKey: any; // for next button
   prevKeys: any[] = []; // for prev button
   subscription: any;
-  settings: Settings;
 
-  constructor(private storage: Storage, public events: Events, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
-    this.events.subscribe('settingsChanged', (settings) => {
-      this.settings = settings;
-      this.offset = this.settings.public_plant_pagination_count;
-    });
+  constructor(public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
   }
 
   ionViewDidLoad() {
@@ -78,25 +74,26 @@ export class DatabasePlantsPage {
    * @param key key to continue with.
    */
   public loadMore(key?){
-    if(this.offset === undefined){
-      this.settings = new Settings(this.storage);
+    var offset = this.settings.public_plant_pagination_count;
+    if(offset === undefined){
+      //this.settings = new Settings(this.storage);
       this.settings.load()
       .then((val) => {
-        this.offset = this.settings.public_plant_pagination_count;
-        this.db.listParentPlantsFromTo(this.offset, key).
+        offset = this.settings.public_plant_pagination_count;
+        this.db.listParentPlantsFromTo(offset, key).
         subscribe((plant) => {
           //console.log(plant);
-          this.plants = _.slice(plant, 0, this.offset);
-          this.nextKey = _.get(plant[this.offset], '$key')
+          this.plants = _.slice(plant, 0, offset);
+          this.nextKey = _.get(plant[offset], '$key')
           //console.log(_.get(plant[this.offset], '$key'));
         });
       })
     } else {
-      this.db.listParentPlantsFromTo(this.offset, key).
+      this.db.listParentPlantsFromTo(offset, key).
       subscribe((plant) => {
         //console.log(plant);
-        this.plants = _.slice(plant, 0, this.offset);
-        this.nextKey = _.get(plant[this.offset], '$key')
+        this.plants = _.slice(plant, 0, offset);
+        this.nextKey = _.get(plant[offset], '$key')
         //console.log(_.get(plant[this.offset], '$key'));
       });
     }

@@ -1,22 +1,27 @@
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-/**
- * This class is deprected and replaced with the settings proivder
- */
-export class Settings {
+/*
+  Generated class for the SettingsProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+@Injectable()
+export class SettingsProvider {
+
     public_plant_pagination_count : number;
     user_plant_pagination_count : number;
     map_points : number;
 
-    private storage : Storage;
+    constructor(public storage: Storage) {
+        console.log('Hello SettingsProvider Provider');
 
-    constructor(storage: Storage,public_pag_count : number = 10, user_pag_count : number = 10, map_points : number = 10) {
-        this.public_plant_pagination_count = public_pag_count;
-        this.user_plant_pagination_count = user_pag_count;
-        this.storage = storage;
-        this.map_points = map_points;
+        this.public_plant_pagination_count = 10;
+        this.user_plant_pagination_count = 10;
+        this.map_points = 10;
+        this.load();
     }
-
     /**
      * saves the settings to local storage
      * returns a promise<boolean>
@@ -62,4 +67,5 @@ export class Settings {
             });
           });
     }
+
 }

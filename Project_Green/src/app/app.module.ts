@@ -34,6 +34,9 @@ import { DatabasePlantsPage } from '../pages/database-plants/database-plants';
 //google maps
 import { Geolocation } from '@ionic-native/geolocation';
 
+//settings
+import { SettingsProvider } from '../providers/settings/settings';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
   authDomain: "project-green-192912.firebaseapp.com",
@@ -83,7 +86,8 @@ const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseServiceProvider,
-    Geolocation
+    Geolocation,
+    SettingsProvider
   ]
 })
 export class AppModule {}

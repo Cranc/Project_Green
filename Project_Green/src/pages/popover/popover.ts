@@ -7,9 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 
 //Settings
-import { Settings } from '../../app/classes/settings';
-import { Events } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 declare var google;
 
@@ -30,8 +28,6 @@ export class PopoverPage {
   msg: string;
   header: string;
   id: number;
-  //settings
-  settings: Settings;
 
   //map stuff
   @ViewChild('map') mapElement: ElementRef;
@@ -42,17 +38,12 @@ export class PopoverPage {
   directionsDisplay = new google.maps.DirectionsRenderer;
   markers = [];
 
-  constructor(private storage: Storage, public events: Events, public viewCtrl: ViewController, public navCtrl: NavController, private geolocation: Geolocation, private db: DatabaseServiceProvider) {
+  constructor(private settings: SettingsProvider, public viewCtrl: ViewController, public navCtrl: NavController, private geolocation: Geolocation, private db: DatabaseServiceProvider) {
     this.msg = this.viewCtrl.data.desc;
     this.header = this.viewCtrl.data.name;
     this.id = this.viewCtrl.data.id;
 
-    this.settings = new Settings(this.storage);
-    this.settings.load();
-
-    this.events.subscribe('settingsChanged', (settings) => {
-      this.settings = settings;
-    });
+    //this.settings.load();
   }
 
   ionViewDidLoad(){
@@ -64,7 +55,6 @@ export class PopoverPage {
    * initalizes the map.
    */
   initMap() {
-    console.log("here");
     this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
       let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
       let image = 'assets/imgs/user_icon_small.png';
@@ -79,11 +69,9 @@ export class PopoverPage {
     }, error => {
       console.log(error);
     });
-    console.log("here now");
 
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
-      console.log("here now okay");
       this.deleteMarkers();
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
       let image = 'assets/imgs/user_icon_small.png';

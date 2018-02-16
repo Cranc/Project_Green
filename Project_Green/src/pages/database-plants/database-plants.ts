@@ -33,11 +33,14 @@ export class DatabasePlantsPage {
   prevKeys: any[] = []; // for prev button
   subscription: any;
 
+  error: boolean;
+
   constructor(public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DatabasePlantsPage');
+    this.error = false;
     this.loadMore();
   }
 
@@ -55,6 +58,12 @@ export class DatabasePlantsPage {
    * loads the next "page" of items.
    */
   nextPage() {
+    if(this.error){
+      this.loadMore();
+      this.error = false;
+      return;
+    }
+
     this.prevKeys.push(_.first(this.plants)['$key']) // set current key as pointer for previous page
     this.loadMore(this.nextKey)
     //console.log(this.prevKeys);
@@ -64,6 +73,11 @@ export class DatabasePlantsPage {
    * returns to the previous "page" of items.
    */
   prevPage() {
+    if(this.error){
+      this.loadMore();
+      this.error = false;
+      return;
+    }
     const prevKey = _.last(this.prevKeys) // use last key in array
     this.prevKeys = _.dropRight(this.prevKeys) // then remove the last key in the array
     this.loadMore(prevKey)
@@ -87,14 +101,18 @@ export class DatabasePlantsPage {
           this.nextKey = _.get(plant[offset], '$key')
           //console.log(_.get(plant[this.offset], '$key'));
         });
+      },error => {
+        console.log(error);
+        this.error = true;
       })
     } else {
       this.db.listParentPlantsFromTo(offset, key).
       subscribe((plant) => {
-        //console.log(plant);
         this.plants = _.slice(plant, 0, offset);
         this.nextKey = _.get(plant[offset], '$key')
-        //console.log(_.get(plant[this.offset], '$key'));
+      },error => {
+        console.log(error);
+        this.error = true;
       });
     }
   }

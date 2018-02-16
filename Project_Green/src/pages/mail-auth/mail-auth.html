@@ -29,7 +29,7 @@
     </ion-list>
     <div class="error-box" *ngIf="form.controls['mail'].hasError('required') && form.controls['mail'].touched">* Email is required!</div>
     <div class="error-box" *ngIf="form.controls['pwd'].hasError('minlength') && form.controls['pwd'].touched">* Minimum username length is 6!</div>
-    <div class="error-box" *ngIf="failed_login == true">* Failed to Create Account: [{{failed_login_msg}}]</div>
+    <div class="error-box" *ngIf="failed_login == true">* Failed to Login: [{{failed_login_msg}}]</div>
     <div class="row" text-center>
         <div class="col" >
             <button ion-button (click)="applyModal()">Apply</button>

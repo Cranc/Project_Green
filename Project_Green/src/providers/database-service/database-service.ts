@@ -6,6 +6,7 @@ import { query } from '@angular/core/src/animation/dsl';
 import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
 import { Parent_Plant } from '../../app/classes/parent_plant';
+import { error } from 'util';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -323,10 +324,11 @@ export class DatabaseServiceProvider {
   }
 
   /**
-   * function to fill Parent_Plant Lexicon (DO NOT USE!!!)
+   * function to fill Parent_Plant Lexicon (DO NOT USE UNLESS YOU KNOW WHAT YOU ARE DOING!!!)
    */
   private initParentPlants(){
-    var plant = new Parent_Plant(
+    var plant;
+    /*plant = new Parent_Plant(
       "Schneeglöckchen",
       "Schneeglöckchen-Arten sind ausdauernde krautige Pflanzen. Diese Geophyten bilden Zwiebeln als Überdauerungsorgane. Zwei bis – selten – drei parallelnervige Laubblätter stehen grundständig zusammen.",
       [2], [0], [0,1], [0,1], [0], [0,3,4,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
@@ -344,5 +346,41 @@ export class DatabaseServiceProvider {
       [0], [0], [3,4,5,6,7,8], [1,2], [2], [0,1,2,3,4,5,6,7,9,10], [0], [1], [2], [3], [0], [0], [6], [3]
     );
     this.addDatabasePlantToDatabase(plant);
+    plant = new Parent_Plant(
+      "Färberröte",
+      "Die Färberröten oder Krappe (Rubia) sind eine Pflanzengattung innerhalb der Familie der Rötegewächse (Rubiaceae). Die 60 bis 80 Arten sind in der Alten Welt in Afrika und Eurasien weitverbreitet.",
+      [3], [1,4], [1,2,3,4,5], [1,2,3], [2], [3], [3], [1], [3], [0,1], [0], [0,3], [7], [11]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Efeu",
+      "Der Gemeine Efeu, auch Gewöhnlicher Efeu oder kurz Efeu (Hedera helix), ist eine Pflanzenart aus der Gattung Efeu (Hedera) innerhalb der Familie der Araliengewächse (Araliaceae) und wurde früher auch mit Epheu bezeichnet.",
+      [3], [1,4], [2,3,4,5,6,7,8,9], [4], [1], [2,3,4,10,11], [1], [1], [2], [0,6], [1], [0,6], [3,5], [5]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Heidelbeere",
+      "Die Heidelbeere (Vaccinium myrtillus), regional auch Besing, Blaubeere, Schwarzbeere, Mollbeere, Wildbeere, Waldbeere, Bickbeere, Zeckbeere, Moosbeere oder (besonders auch schweiz. und süddeut.) Heubeere genannt, ist eine Art aus der Gattung der Heidelbeeren (Vaccinium) in der Familie der Heidekrautgewächse (Ericaceae).",
+      [1], [0,2], [1,2], [1,2,3], [2], [0,3,7,9,10], [1], [1], [2], [1], [3], [0], [3], [0]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Gemeiner Goldregen",
+      "Der Gemeine Goldregen (Laburnum anagyroides), auch Gewöhnlicher Goldregen genannt, ist eine Pflanzenart aus der Gattung Goldregen (Laburnum). Sie ist giftig.",
+      [0,1], [0,1], [5,6,7], [1,2], [5], [3,4,10], [1], [0], [2], [0], [2], [14], [7], [0]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    */
+
+    /*plant = new Parent_Plant(
+      "Efeu",
+      "",
+      [], [], [], [], [], [], [], [], [], [], [], [], [], []
+    );
+    this.addDatabasePlantToDatabase(plant);*/
   }
 }

@@ -48,7 +48,7 @@ export class PopoverPage {
 
   ionViewDidLoad(){
     console.log("Popover was loaded!");
-    this.initMap();
+    this.settings.load().then(() => {this.initMap();});
   }
 
   /**

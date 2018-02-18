@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Events } from 'ionic-angular';
 
 /*
   Generated class for the SettingsProvider provider.
@@ -14,9 +15,8 @@ export class SettingsProvider {
     user_plant_pagination_count : number;
     map_points : number;
 
-    constructor(public storage: Storage) {
+    constructor(public storage: Storage, public events: Events) {
         console.log('Hello SettingsProvider Provider');
-
         this.public_plant_pagination_count = 10;
         this.user_plant_pagination_count = 10;
         this.map_points = 10;
@@ -34,6 +34,7 @@ export class SettingsProvider {
                 .then(() => {
                     this.storage.set('map_points', this.map_points)
                     .then(() => {
+                        this.events.publish('settings:changed');
                         resolve(true);
                     })
                 });

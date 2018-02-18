@@ -35,13 +35,23 @@ export class DatabasePlantsPage {
 
   error: boolean;
 
-  constructor(public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
+  constructor(public events: Events, public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
+    console.log("called lexikon");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DatabasePlantsPage');
     this.error = false;
-    this.loadMore();
+    this.settings.load().then(() => {
+      this.loadMore();
+    });
+
+    this.events.subscribe('settings:changed', () => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.settings.load().then(() => {
+        this.loadMore();
+      });
+    });
   }
 
   /**

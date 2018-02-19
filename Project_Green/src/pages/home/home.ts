@@ -31,6 +31,20 @@ export class HomePage {
    * Signs into the Database with a GitHub account
    */
   public signInWithGitHub() {
+    /*
+    this.auth.auth.signInWithRedirect(new firebase.auth.GithubAuthProvider())
+    .then((result) => {
+      if(result.credential) {
+        console.log(result.credential.accessToken);
+        this.db.addUserToDatabase();
+      }
+    }).catch((error) => {
+      console.log(error);
+      console.log(error.message);
+    });
+    */
+
+
     this.auth.auth
       .signInWithPopup(new firebase.auth.GithubAuthProvider())
       .then(res => {

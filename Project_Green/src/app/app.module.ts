@@ -37,6 +37,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 //settings
 import { SettingsProvider } from '../providers/settings/settings';
 
+//Login
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDGVRgRhRSMQGa39jMyviVWQGKm8jwY_Mo",
   authDomain: "project-green-192912.firebaseapp.com",
@@ -87,7 +90,8 @@ const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseServiceProvider,
     Geolocation,
-    SettingsProvider
+    SettingsProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

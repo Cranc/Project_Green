@@ -32,17 +32,17 @@
     <div class="error-box" *ngIf="failed_login == true">* Failed to Login: [{{failed_login_msg}}]</div>
     <div class="row" text-center>
         <div class="col" >
-            <button ion-button (click)="applyModal()">Apply</button>
+            <button ion-button (click)="applyModal()" style="width: 95%">Apply</button>
         </div>
     </div>
     <div class="row" text-center>
         <div class="col" >
-            <button ion-button (click)="closeModal()">Close</button>
+            <button ion-button (click)="closeModal()" style="width: 95%">Close</button>
         </div>
     </div>
     <div class="row" text-center>
         <div class="col" >
-            <button ion-button (click)="createAccount()">No Account? Register here</button>
+            <button ion-button (click)="createAccount()" style="width: 95%">No Account? Register here</button>
         </div>
     </div>
 </ion-content>

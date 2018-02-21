@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { resolve } from 'url';
 
@@ -24,10 +25,11 @@ export class SettingsPage {
   pagination_count: number;
   user_pagination_count: number;
   map_points: number;
+  verified: boolean;
 
   //settings: Settings;
 
-  constructor(public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public db : DatabaseServiceProvider) {
+  constructor(public auth:AngularFireAuth, public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public db : DatabaseServiceProvider) {
     this.names = fb.group({
       'name' : ['', Validators.compose([Validators.required,Validators.minLength(1)])],
       'lastname' : ['', Validators.compose([Validators.required,Validators.minLength(1)])]
@@ -38,6 +40,11 @@ export class SettingsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
+    var user = this.auth.auth.currentUser;
+    if(user != null)
+      this.verified = user.emailVerified;
+    console.log(this.verified);
+    console.log(user);
   }
 
   /**
@@ -84,5 +91,20 @@ export class SettingsPage {
 
     if(this.names.get('lastname').valid)
       this.db.updateUserLastname(this.names.get('lastname').value);
+  }
+
+  /**
+   * called when verify email button is pressed and sends a verification email to the user.
+   */
+  public verifyMail() {
+    var user = this.auth.auth.currentUser;
+    if(user === null)
+      return;
+
+    user.sendEmailVerification().then(res => {
+      alert("Eine Email mit einem Bestätigungs Link wurde versendet");
+    }).catch(error => {
+      alert(error);
+    })
   }
 }

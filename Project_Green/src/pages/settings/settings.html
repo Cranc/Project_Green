@@ -50,7 +50,10 @@
           <ion-label stacked>Nachnamen ändern</ion-label>
           <ion-input type="text" formControlName="lastname" placeholder="Nachname"></ion-input>
       </ion-item>
-      <button ion-button (click)="applyNames()" [disabled]="!((names.controls['lastname'].valid)||(names.controls['name'].valid))">Ändern</button>
+      <button ion-button (click)="applyNames()" [disabled]="!((names.controls['lastname'].valid)||(names.controls['name'].valid))" style="width:100%;">Ändern</button>
       </form>
+      <ion-item>
+        <button ion-button (click)="verifyMail()" [hidden]="(verified)" style="width:100%;">Email Bestätigen</button>
+      </ion-item>
     </ion-list>
 </ion-content>

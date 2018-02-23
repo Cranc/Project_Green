@@ -16,24 +16,27 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-        <ion-label>Anzahl der Benutzer Pflanzen pro Seite</ion-label>
-        <ion-range min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="user_pagination_count" color="secondary">
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0; margin-top: 5px">Anzahl der Benutzer Pflanzen pro Seite</ion-label>
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0;">{{settings.user_plant_pagination_count}}</ion-label>
+        <ion-range style="padding: 0 0 0 0;" min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="user_pagination_count" color="secondary">
             <ion-label range-left>5</ion-label>
             <ion-label range-right>40</ion-label>
         </ion-range>
     </ion-item>
 
     <ion-item>
-        <ion-label>Anzahl der öffentlichen Pflanzen pro Seite</ion-label>
-        <ion-range min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="pagination_count" color="secondary">
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0; margin-top: 5px">Anzahl der Lexikon Pflanzen pro Seite</ion-label>
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0;">{{settings.public_plant_pagination_count}}</ion-label>
+        <ion-range style="padding: 0 0 0 0;" min="5" max="40" step="1" snaps="true" (ionChange)="onPaginationChange()" [(ngModel)]="pagination_count" color="secondary">
             <ion-label range-left>5</ion-label>
             <ion-label range-right>40</ion-label>
         </ion-range>
     </ion-item>
 
     <ion-item>
-        <ion-label>Maximale Coordinaten auf der Karte</ion-label>
-        <ion-range min="5" max="100" step="1" snaps="true" (ionChange)="onMapCountChange()" [(ngModel)]="map_points" color="secondary">
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0; margin-top: 5px">Maximale Coordinaten auf der Karte</ion-label>
+        <ion-label style="font-size: 0.8em; padding: 0 0 0 0; margin: 0 0 0 0;">{{settings.map_points}}</ion-label>
+        <ion-range style="padding: 0 0 0 0;" min="5" max="100" step="1" snaps="true" (ionChange)="onMapCountChange()" [(ngModel)]="map_points" color="secondary">
             <ion-label range-left>5</ion-label>
             <ion-label range-right>100</ion-label>
         </ion-range>

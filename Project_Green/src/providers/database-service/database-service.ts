@@ -328,7 +328,8 @@ export class DatabaseServiceProvider {
    */
   private initParentPlants(){
     var plant;
-    /*plant = new Parent_Plant(
+    /*
+    plant = new Parent_Plant(
       "Schneeglöckchen",
       "Schneeglöckchen-Arten sind ausdauernde krautige Pflanzen. Diese Geophyten bilden Zwiebeln als Überdauerungsorgane. Zwei bis – selten – drei parallelnervige Laubblätter stehen grundständig zusammen.",
       [2], [0], [0,1], [0,1], [0], [0,3,4,9,10], [0], [1], [0], [0], [0], [3], [7], [8]
@@ -374,13 +375,73 @@ export class DatabaseServiceProvider {
     );
     this.addDatabasePlantToDatabase(plant);
 
+    plant = new Parent_Plant(
+      "Rippenfarn",
+      "Der Rippenfarn (Blechnum spicant), auch Gewöhnlicher Rippenfarn oder Europa-Rippenfarn genannt, ist eine Pflanzenart aus der Gattung der Rippenfarne (Blechnum) in der Familie der Rippenfarngewächse (Blechnaceae). Diese Art ist der einzige Vertreter der Gattung in Mitteleuropa.",
+      [2,5], [4], [1,2], [3,4], [5], [0,3,9,10], [3], [0], [0], [0], [4], [8,10], [7], [11]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Bergfarn",
+      "Der Bergfarn oder Berg-Lappenfarn (Oreopteris limbosperma (Bellardi ex All.) Holub; Syn: Thelypteris limbosperma (Bellardi ex All.) H.P. Fuchs) ist eine Pflanzenart innerhalb der Familie der Sumpffarngewächse (Thelypteridaceae). Sie ist auf der Nordhalbkugel in Eurasien und Nordamerika weitverbreitet.",
+      [2,5], [4], [2,3,4], [3], [5], [0,3,9,10], [3], [0], [0], [0], [4], [8,10], [7], [11]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Gelappter Schildfarn",
+      "Der Gelappte Schildfarn (Polystichum aculeatum), auch Glanzschildfarn oder Dorniger Schildfarn genannt, ist eine Pflanzenart aus der Gattung der Schildfarne (Polystichum) innerhalb der Familie der Wurmfarngewächse (Dryopteridaceae). Sie in europäischen Gebirgen typisch für Schluchtwälder und Schutthangwälder.",
+      [2,5], [4], [2,3,4], [3,4], [5], [0,2,3,9,10], [3], [0], [0], [0,3], [4], [10], [7], [11]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Spitz-Ahorn",
+      "Der Spitzahorn (Acer platanoides), auch Spitzblättriger Ahorn genannt, ist eine Pflanzenart aus der Gattung der Ahorne (Acer) innerhalb der Familie der Seifenbaumgewächse (Sapindaceae) bzw. der Ahorngewächse (Aceraceae). Um seine Zugehörigkeit zur Gattung der Ahorne zu betonen, ist in der Botanik die Bindestrichschreibweise Spitz-Ahorn üblich.",
+      [0], [1,4], [5,6,7,8,9], [1,2], [5], [0,3,4,9,10], [1], [0], [1], [1,5], [0], [7,8], [7], [5]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Gewöhnliche Esche",
+      "Die Gemeine Esche, Gewöhnliche Esche oder Hohe Esche (Fraxinus excelsior) ist eine in Europa heimische Baumart, die mit einer Wuchshöhe von bis zu etwa 40 Metern zu den höchsten Laubbäumen Europas zählt; an exponierteren Standorten erreicht sie jedoch oftmals nur um 15 bis 20 Meter.",
+      [0], [1,4], [6,7,8,9], [1,2], [1], [0,1,3,4,5,9,10], [1], [0], [1], [3], [1,2], [7,8,10,13], [7], [2]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+
+
+    plant = new Parent_Plant(
+      "Acker-Winde",
+      "Die Acker-Winde (Convolvulus arvensis) ist eine in Europa weit verbreitete Pflanze aus der Familie der Windengewächse (Convolvulaceae).",
+      [3], [0,2], [1,2,3], [1,2,3,4], [2], [1,3,4,5,10], [1], [1], [2], [0], [3], [5], [7], [0]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Himbeere",
+      "Die Himbeere (Rubus idaeus) ist eine Pflanzenart aus der Untergattung Idaeobatus in der Gattung Rubus innerhalb der Familie der Rosengewächse (Rosaceae).",
+      [1,3], [0], [3,4,5], [2,3], [2], [1,10], [1], [0], [2], [4], [0], [10,13], [2,5], [2]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
+    plant = new Parent_Plant(
+      "Falten-Brombeere",
+      "Die Falten-Brombeere (Rubus plicatus). Die Gattung Rubus ist außerordentlich formen- und artenreich. Sie umfasst momentan über 400 zum Teil schwer unterscheidbare Arten bzw. Unterarten und Übergangsformen, die nur mit spezieller Literatur zu bestimmen sind.",
+      [1,3], [0,2], [3,4,5], [2,3], [2], [3], [2], [0], [2], [3], [0], [10,13,14], [2,5], [2]
+    );
+    this.addDatabasePlantToDatabase(plant);
+
     */
 
-    /*plant = new Parent_Plant(
+    /*
+    plant = new Parent_Plant(
       "Efeu",
       "",
       [], [], [], [], [], [], [], [], [], [], [], [], [], []
     );
-    this.addDatabasePlantToDatabase(plant);*/
+    this.addDatabasePlantToDatabase(plant);
+    */
   }
 }

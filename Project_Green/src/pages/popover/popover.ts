@@ -51,10 +51,6 @@ export class PopoverPage {
       this.user_flag = false;
     else
       this.user_flag = true;
-
-    console.log(this.user_flag);
-
-    //this.settings.load();
   }
 
   ionViewDidLoad(){
@@ -62,11 +58,7 @@ export class PopoverPage {
 
     this.settings.load().then(() => {
       this.initMap().then(() => {google.maps.event.trigger(this.map, 'resize');});
-
     });
-
-
-    //this.settings.load().then(() => {this.initMap();});
   }
 
   /**

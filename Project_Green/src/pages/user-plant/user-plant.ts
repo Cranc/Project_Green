@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 import { FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Plant } from '../../app/classes/plant';
 import { PopoverController } from 'ionic-angular';
 import { PopoverPage } from '../popover/popover';
@@ -28,14 +29,23 @@ import * as _ from "lodash";
   templateUrl: 'user-plant.html',
 })
 export class UserPlantPage {
-  plants: any;
+  plants: Plant[] = [];
   nextKey: any; // for next button
   prevKeys: any[] = []; // for prev button
   subscription: any;
 
   error: boolean;
 
-  constructor(public events: Events, public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
+  list: FirebaseListObservable<Plant[]>;
+
+  constructor(public auth:AngularFireAuth, public events: Events, public settings: SettingsProvider, public navCtrl: NavController, public navParams: NavParams, public db: DatabaseServiceProvider, public popoverCtrl: PopoverController) {
+    this.list = this.db.listMyUserPlants();
+
+    /*this.db.listMyUserPlants().subscribe(snapshots=>{
+      snapshots.forEach(snapshot => {
+        console.log(snapshot.key, snapshot.val());
+      });
+    })*/
   }
 
   ionViewDidLoad() {
@@ -45,12 +55,15 @@ export class UserPlantPage {
       this.loadMore();
     });
 
-    /*this.events.subscribe('settings:changed', () => {
+    let plant = new Plant("", "testplant 2", "this is a test plant designed to be found by test@test.com", 21,20,"","-L4LgfHiGJlYmb4KnQIr",null);
+
+    //this.db.addUserPlantToDatabase(plant);
+    this.events.subscribe('settings:changed', () => {
       // user and time are the same arguments passed in `events.publish(user, time)`
       this.settings.load().then(() => {
         this.loadMore();
       });
-    });*/
+    });
   }
 
    /**
@@ -73,6 +86,10 @@ export class UserPlantPage {
       return;
     }
 
+    if(this.plants.length < this.settings.user_plant_pagination_count)
+      return;
+
+
     this.prevKeys.push(_.first(this.plants)['$key']) // set current key as pointer for previous page
     this.loadMore(this.nextKey)
     //console.log(this.prevKeys);
@@ -87,42 +104,69 @@ export class UserPlantPage {
       this.error = false;
       return;
     }
+
     const prevKey = _.last(this.prevKeys) // use last key in array
     this.prevKeys = _.dropRight(this.prevKeys) // then remove the last key in the array
-    this.loadMore(prevKey)
+
+    if(this.prevKeys.length === 0){
+      this.loadMore();
+      return;
+    }
+
+      this.loadMore(prevKey)
   }
 
   /**
    * loads the next batch of items from the database.
    * @param key key to continue with.
    */
-  public loadMore(key?){
+  public loadMore(key = ""){
+    this.plants = [];
+
     var offset = this.settings.user_plant_pagination_count;
     if(offset === undefined){
       //this.settings = new Settings(this.storage);
       this.settings.load()
       .then((val) => {
-        offset = this.settings.user_plant_pagination_count;
-        this.db.listUserPlantsFromTo(offset, key).
-        subscribe((plant) => {
-          console.log(plant);
-          this.plants = _.slice(plant, 0, offset);
-          this.nextKey = _.get(plant[offset], '$key')
-          //console.log(_.get(plant[this.offset], '$key'));
-        });
+
+        let sub = this.list.subscribe((plant) => {
+          var index = 0;
+          for (let p of plant){
+
+            this.plants.push(p);
+            if(p.id === key)
+              index = this.plants.indexOf(p);
+          }
+
+          this.plants = this.plants.slice(index,index + this.settings.user_plant_pagination_count);
+          this.nextKey = this.plants[this.plants.length - 1].id;
+
+          sub.unsubscribe();
+        })
+
       },error => {
         console.log(error);
         this.error = true;
       })
+
     } else {
-      this.db.listUserPlantsFromTo(offset, key).
-      subscribe((plant) => {
-        this.plants = _.slice(plant, 0, offset);
-        this.nextKey = _.get(plant[offset], '$key')
-      },error => {
-        console.log(error);
-        this.error = true;
-      });
+
+      let sub = this.list.subscribe((plant) => {
+        var index = 0;
+        for (let p of plant){
+
+          this.plants.push(p);
+          if(p.id === key)
+            index = this.plants.indexOf(p);
+        }
+
+        this.plants = this.plants.slice(index,index + this.settings.user_plant_pagination_count);
+        this.nextKey = this.plants[this.plants.length - 1].id;
+
+        sub.unsubscribe();
+      })
+
+
     }
   }
 

@@ -307,8 +307,6 @@ export class DatabaseServiceProvider {
         equalTo: this._af.auth.currentUser.uid
       }
     });
-
-    //let t = list.$ref.orderByKey().startAt(key).limitToFirst(offset + 1);
   }
 
   /**

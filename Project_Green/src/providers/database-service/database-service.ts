@@ -7,6 +7,7 @@ import { User } from '../../app/classes/user';
 import { Plant } from '../../app/classes/plant';
 import { Parent_Plant } from '../../app/classes/parent_plant';
 import { error } from 'util';
+import { DatabaseSnapshot } from 'angularfire2/interfaces';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -289,7 +290,23 @@ export class DatabaseServiceProvider {
    * @param plant plant to add
    */
   public addUserPlantToDatabase(plant : Plant){
-    this.listUserPlants().push(plant);
+    plant.user_id = this.auth.auth.currentUser.uid;
+    let ref = this.listUserPlants().push(plant);
+    ref.update({"id" : ref.key});
+  }
+
+  /**
+   * Connects to the Database and returns a List of Parent_Plant Object starting by the given key.
+   * @param offset number of items to return.
+   * @param key key to start at (Optional) not giving a key results in starting from begining.
+   */
+  public listMyUserPlants(): FirebaseListObservable<Plant[]>{
+    return this._db.list('/plants', {
+      query: {
+        orderByChild: 'user_id',
+        equalTo: this._af.auth.currentUser.uid
+      }
+    });
   }
 
   /**

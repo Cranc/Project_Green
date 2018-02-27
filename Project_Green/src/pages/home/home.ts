@@ -22,7 +22,7 @@ export class HomePage {
   constructor(public browser: InAppBrowser ,private platform: Platform, public navCtrl: NavController, public db:DatabaseServiceProvider, public auth:AngularFireAuth, public modalCtrl : ModalController) {
     this.accounts = this.db.listAccounts();
     this.blossomcolor = this.db.listBlossomColor();
-
+    console.log(this.auth.auth.currentUser);
   }
 
   /**

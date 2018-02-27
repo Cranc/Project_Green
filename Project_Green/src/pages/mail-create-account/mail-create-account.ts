@@ -51,8 +51,9 @@ export class MailCreateAccountPage {
     let pwd = this.form.get('pwd1');
     this.auth.auth.createUserWithEmailAndPassword(email.value, pwd.value)
       .then(res => {
-        console.log(res);
-        this.db.addUserToDatabase(this.form.get('nick').value);
+        let nick = String(this.form.get('nick').value);
+        this.auth.auth.currentUser.updateProfile({displayName: nick, photoURL: ""});
+        this.db.addUserToDatabase(nick);
         this.viewCtrl.dismiss(true);
       },
       error => {

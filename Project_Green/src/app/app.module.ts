@@ -9,6 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
+import { UserPlantPage } from '../pages/user-plant/user-plant';
 
 //Popoups
 import { MailAuthPage } from '../pages/mail-auth/mail-auth';
@@ -55,6 +56,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    UserPlantPage,
     TabsPage,
     DatabasePlantsPage,
     SettingsPage,
@@ -77,6 +79,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    UserPlantPage,
     TabsPage,
     DatabasePlantsPage,
     SettingsPage,

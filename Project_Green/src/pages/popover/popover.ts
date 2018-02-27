@@ -8,6 +8,7 @@ import { DatabaseServiceProvider } from '../../providers/database-service/databa
 
 //Settings
 import { SettingsProvider } from '../../providers/settings/settings';
+import { Promise } from 'firebase/app';
 
 declare var google;
 
@@ -25,6 +26,9 @@ declare var google;
 
 })
 export class PopoverPage {
+
+  user_flag: boolean;
+
   msg: string;
   header: string;
   id: number;
@@ -43,31 +47,45 @@ export class PopoverPage {
     this.header = this.viewCtrl.data.name;
     this.id = this.viewCtrl.data.id;
 
-    //this.settings.load();
+    if(this.viewCtrl.data.lat === undefined)
+      this.user_flag = false;
+    else
+      this.user_flag = true;
   }
 
   ionViewDidLoad(){
     console.log("Popover was loaded!");
-    this.settings.load().then(() => {this.initMap();});
+
+    this.settings.load().then(() => {
+      this.initMap().then(() => {google.maps.event.trigger(this.map, 'resize');});
+    });
   }
 
   /**
    * initalizes the map.
    */
-  initMap() {
-    this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
+  initMap() : Promise<boolean> {
+    return new Promise ((resolve) => {
+      this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
       let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
       let image = 'assets/imgs/user_icon_small.png';
+
       this.addMarker(mylocation, image);
+      this.getPlantLocations();
+      this.getUserPlantLocation();
+
       this.map = new google.maps.Map(this.mapElement.nativeElement, {
         zoom: 7,
-        center: mylocation
+        center: mylocation,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
       });
 
       this.setMapOnAll(this.map);
       this.directionsDisplay.setMap(this.map);
+      resolve(true);
     }, error => {
       console.log(error);
+      resolve(false);
     });
 
     let watch = this.geolocation.watchPosition();
@@ -76,18 +94,37 @@ export class PopoverPage {
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
       let image = 'assets/imgs/user_icon_small.png';
       this.addMarker(updatelocation,image);
-      this.getPlantLocations();
       this.setMapOnAll(this.map);
       this.directionsDisplay.setMap(this.map);
     }, error => {
       console.log(error);
     });
+    });
+  }
+
+  public setUserFlag(){
+    this.user_flag = true;
+  }
+
+  /**
+   * gets user plant location and places the marker on the map.
+   */
+  public getUserPlantLocation() {
+    if(!this.user_flag)
+      return;
+
+      let updatelocation = new google.maps.LatLng(this.viewCtrl.data.lat, this.viewCtrl.data.lng);
+      let image = 'assets/imgs/map_icon_small.png';
+      this.addMarker(updatelocation, image);
   }
 
   /**
    * gets plant locations and places the markers on the map.
    */
   public getPlantLocations() {
+    if(this.user_flag)
+      return;
+
     this.db.listUserPlantsWithId(this.settings.map_points,this.id).subscribe((val) => {
       //this.clearMarkers();
       val.forEach((value) => {

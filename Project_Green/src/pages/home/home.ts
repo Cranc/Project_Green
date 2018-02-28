@@ -4,6 +4,7 @@ import { DatabaseServiceProvider } from '../../providers/database-service/databa
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { LoginPage } from '../login/login';
 import { MailAuthPage } from '../mail-auth/mail-auth';
 import { ModalController, Platform } from 'ionic-angular';
 
@@ -22,6 +23,8 @@ export class HomePage {
   constructor(public browser: InAppBrowser ,private platform: Platform, public navCtrl: NavController, public db:DatabaseServiceProvider, public auth:AngularFireAuth, public modalCtrl : ModalController) {
     this.accounts = this.db.listAccounts();
     this.blossomcolor = this.db.listBlossomColor();
+
+
     console.log(this.auth.auth.currentUser);
   }
 

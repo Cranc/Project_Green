@@ -1,0 +1,49 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>REGISTER</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding style="background-color:#aceace">
+    <form [formGroup]="form" (ngSubmit)="logForm()">
+    <ion-list>
+        <ion-item style="background-color:#aceace">
+            <ion-label floating>Nickname</ion-label>
+            <ion-input type="text" formControlName="nick"></ion-input>
+        </ion-item>
+        <ion-item style="background-color:#aceace">
+            <ion-label floating>Email</ion-label>
+            <ion-input type="email" formControlName="mail"></ion-input>
+        </ion-item>
+        <ion-item style="background-color:#aceace">
+            <ion-label floating>Passwort</ion-label>
+            <ion-input type="password" formControlName="pwd1"></ion-input>
+        </ion-item>
+        <ion-item style="background-color:#aceace">
+            <ion-label floating>Passwort bestätigen</ion-label>
+            <ion-input type="password" formControlName="pwd2"></ion-input>
+        </ion-item>
+    </ion-list>
+    <div class="error-box" *ngIf="form.controls['nick'].hasError('required') && form.controls['nick'].touched">* Kein Nickname!</div>
+    <div class="error-box" *ngIf="form.controls['nick'].hasError('minlength') && form.controls['nick'].touched">* Minimale Passwort länge ist 6!</div>
+    <div class="error-box" *ngIf="form.controls['mail'].hasError('required') && form.controls['mail'].touched">* Keine E-Mail eingetragen!</div>
+    <div class="error-box" *ngIf="form.controls['pwd1'].hasError('minlength') && form.controls['pwd1'].touched">* Minimale Passwort länge ist 6!</div>
+    <div class="error-box" *ngIf="((form.controls['pwd1'].touched || form.controls['pwd2'].touched) && form.controls['pwd1'].value !== form.controls['pwd2'].value)">* Passwörter müssen überinstimmen!</div>
+    <div class="error-box" *ngIf="failed_creation == true">* Account erstellung fehlgeschlagen: [{{failed_creation_msg}}]</div>
+    <br/>
+    <div class="row" text-center>
+        <div class="col" >
+            <button ion-button (click)="register()" [disabled]="!form.valid" full>Registrieren</button>
+        </div>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,239 @@
+<!--
+  Generated template for the IdentifyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>BESTIMMEN</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding style="background-color:#aceace">
+
+  <ion-card>
+  <ion-card-header>
+    Pflanze gefunden? Bestimme Sie hier!
+  </ion-card-header>
+
+  <ion-item>
+    <ion-label>Typ {{ plant_type_id}}</ion-label>
+    <ion-select [(ngModel)]="plant_type_id" (ionChange)="filterExact('plant_type_id',  plant_type_id)" multiple="true">
+      <ion-option *ngFor="let item of planttype | async" value="{{ item.id }}">{{ item.id }} : {{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Größe</ion-label>
+    <ion-select [(ngModel)]="plant_size_id" (ionChange)="filterExact('plant_size_id', plant_size_id)" multiple="true">
+      <ion-option *ngFor="let item of plantsize | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blütezeit</ion-label>
+    <ion-select [(ngModel)]="plant_flowering_time_id" (ionChange)="filterExact('plant_flowering_time_id', plant_flowering_time_id)" multiple="true">
+      <ion-option *ngFor="let item of planttime | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blütenanzahl</ion-label>
+    <ion-select [(ngModel)]="plant_blossoms_id" (ionChange)="filterExact('plant_blossoms_id', plant_blossoms_id)" multiple="true">
+      <ion-option *ngFor="let item of plantblossoms | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blütenform</ion-label>
+    <ion-select [(ngModel)]="blossom_shape_id" (ionChange)="filterExact('blossom_shape_id', blossom_shape_id)" multiple="true">
+      <ion-option *ngFor="let item of plantblossomshape | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blütenfarbe</ion-label>
+    <ion-select [(ngModel)]="blossom_color_id" (ionChange)="filterExact('blossom_color_id', blossom_color_id)" multiple="true">
+      <ion-option *ngFor="let item of plantblossomcolor | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Fundort</ion-label>
+    <ion-select [(ngModel)]="location_id" (ionChange)="filterExact('location_id', location_id)" multiple="true">
+      <ion-option *ngFor="let item of plantlocation | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blattform</ion-label>
+    <ion-select [(ngModel)]="leaf_shape_id" (ionChange)="filterExact('leaf_shape_id', leaf_shape_id)" multiple="true">
+      <ion-option *ngFor="let item of plantleafshape | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blattstellung</ion-label>
+    <ion-select [(ngModel)]="leaf_presentation_id" (ionChange)="filterExact('leaf_presentation_id', leaf_presentation_id)" multiple="true">
+      <ion-option *ngFor="let item of plantleafpresentation | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blattnerven</ion-label>
+    <ion-select [(ngModel)]="leaf_nerves_id" (ionChange)="filterExact('leaf_nerves_id', leaf_nerves_id)" multiple="true">
+      <ion-option *ngFor="let item of plantleafnerves | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blattrand</ion-label>
+    <ion-select [(ngModel)]="leaf_edge_id" (ionChange)="filterExact('leaf_edge_id', leaf_edge_id)" multiple="true">
+      <ion-option *ngFor="let item of plantleafedge | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blattspreite</ion-label>
+    <ion-select [(ngModel)]="leaf_blade_id" (ionChange)="filterExact('leaf_blade_id', leaf_blade_id)" multiple="true">
+      <ion-option *ngFor="let item of plantleafblade | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Blütenstand</ion-label>
+    <ion-select [(ngModel)]="inflorescence_id" (ionChange)="filterExact('inflorescence_id', inflorescence_id)" multiple="true">
+      <ion-option *ngFor="let item of plantinflorescence | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Frucht-Farbe</ion-label>
+    <ion-select [(ngModel)]="fruit_color_id" (ionChange)="filterExact('fruit_color_id', fruit_color_id)" multiple="true">
+      <ion-option *ngFor="let item of plantfruitcolor | async" value="{{ item.id }}">{{ item.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <button ion-button (click)="removeFilter()" full>Filter entfernen</button>
+  </ion-item>
+
+
+  <h2 text-center>Gefilterte Pflanzen:</h2><br>
+  <div *ngFor="let plants of filteredParentplants">
+    <h6 text-center>{{plants.name}}</h6>
+    <ul text-center>
+      <!--<li>Beschreibung: {{plants.blossom_shape_id}}</li>-->
+    </ul>
+  </div>
+
+
+  <!--<ion-list>
+    <button ion-item (click)="onButtonClick(1)"><ion-icon name="add" item-start></ion-icon>Typ</button>
+    <div *ngIf="buttonClicked == 1">
+      <ion-item tappable *ngFor="let item of planttype | async">
+        <ion-label>{{ item.name }}</ion-label>
+        <ion-input hidden [(ngModel)]="type"></ion-input>
+        <ion-checkbox name="typecheck" (click)="updateVariable()"></ion-checkbox>
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(2)"><ion-icon name="add" item-start></ion-icon>Größe</button>
+    <div *ngIf="buttonClicked == 2">
+      <ion-item tappable *ngFor="let item of plantsize | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(3)"><ion-icon name="add" item-start></ion-icon>Blütezeit</button>
+    <div *ngIf="buttonClicked == 3">
+      <ion-item tappable *ngFor="let item of planttime | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(4)"><ion-icon name="add" item-start></ion-icon>Blütenanzahl</button>
+    <div *ngIf="buttonClicked == 4">
+      <ion-item tappable *ngFor="let item of plantblossoms | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(13)"><ion-icon name="add" item-start></ion-icon>Blütenform</button>
+    <div *ngIf="buttonClicked == 13">
+      <ion-item tappable *ngFor="let item of plantblossomshape | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(14)"><ion-icon name="add" item-start></ion-icon>Blütenfarbe</button>
+    <div *ngIf="buttonClicked == 14">
+      <ion-item tappable *ngFor="let item of plantblossomcolor | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(5)"><ion-icon name="add" item-start></ion-icon>Fundort</button>
+    <div *ngIf="buttonClicked == 5">
+      <ion-item tappable *ngFor="let item of plantlocation | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(6)"><ion-icon name="add" item-start></ion-icon>Blattform</button>
+    <div *ngIf="buttonClicked == 6">
+      <ion-item tappable *ngFor="let item of plantleafshape | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(7)"><ion-icon name="add" item-start></ion-icon>Blattstellung</button>
+    <div *ngIf="buttonClicked == 7">
+      <ion-item tappable *ngFor="let item of plantleafpresentation | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(8)"><ion-icon name="add" item-start></ion-icon>Blattnerven</button>
+    <div *ngIf="buttonClicked == 8">
+      <ion-item tappable *ngFor="let item of plantleafnerves | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(9)"><ion-icon name="add" item-start></ion-icon>Blattrand</button>
+    <div *ngIf="buttonClicked == 9">
+      <ion-item tappable *ngFor="let item of plantleafedge | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(10)"><ion-icon name="add" item-start></ion-icon>Blattspreite</button>
+    <div *ngIf="buttonClicked == 10">
+      <ion-item tappable *ngFor="let item of plantleafblade | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(11)"><ion-icon name="add" item-start></ion-icon>Blütenstand</button>
+    <div *ngIf="buttonClicked == 11">
+      <ion-item tappable *ngFor="let item of plantinflorescence | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+
+    <button ion-item (click)="onButtonClick(12)"><ion-icon name="add" item-start></ion-icon>Fruchtfarbe</button>
+    <div *ngIf="buttonClicked == 12">
+      <ion-item tappable *ngFor="let item of plantfruitcolor | async">
+        {{ item.name }}
+      </ion-item>
+    </div>
+  </ion-list>-->
+
+</ion-card>
+
+</ion-content>

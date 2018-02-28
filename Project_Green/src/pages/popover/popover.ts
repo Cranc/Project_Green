@@ -47,7 +47,6 @@ export class PopoverPage {
     this.header = this.viewCtrl.data.name;
     this.id = this.viewCtrl.data.id;
 
-    //this.settings.load();
     if(this.viewCtrl.data.lat === undefined)
       this.user_flag = false;
     else
@@ -56,7 +55,6 @@ export class PopoverPage {
 
   ionViewDidLoad(){
     console.log("Popover was loaded!");
-    this.settings.load().then(() => {this.initMap();});
 
     this.settings.load().then(() => {
       this.initMap().then(() => {google.maps.event.trigger(this.map, 'resize');});
@@ -66,14 +64,6 @@ export class PopoverPage {
   /**
    * initalizes the map.
    */
-  initMap() {
-    this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
-      let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
-      let image = 'assets/imgs/user_icon_small.png';
-      this.addMarker(mylocation, image);
-      this.map = new google.maps.Map(this.mapElement.nativeElement, {
-        zoom: 7,
-        center: mylocation
   initMap() : Promise<boolean> {
     return new Promise ((resolve) => {
       this.geolocation.getCurrentPosition({ maximumAge: Infinity, timeout: 10000, enableHighAccuracy: true }).then((resp) => {
@@ -92,8 +82,6 @@ export class PopoverPage {
 
       this.setMapOnAll(this.map);
       this.directionsDisplay.setMap(this.map);
-    }, error => {
-      console.log(error);
       resolve(true);
     }, error => {
       console.log(error);
@@ -106,7 +94,6 @@ export class PopoverPage {
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
       let image = 'assets/imgs/user_icon_small.png';
       this.addMarker(updatelocation,image);
-      this.getPlantLocations();
       this.setMapOnAll(this.map);
       this.directionsDisplay.setMap(this.map);
     }, error => {

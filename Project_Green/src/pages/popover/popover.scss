@@ -1,0 +1,52 @@
+page-popover {
+
+}
+/*.edit-opty-popover .popover-content{
+    width: 90%;
+    height: 600px;
+}*/
+
+#icontent {
+    height: 100%;
+    width: 100%;
+}
+
+#content {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    //position: relative;
+}
+
+#msg-box {
+    word-wrap: break-word;
+    //width: 80%;
+}
+
+#mapwrapper {
+
+    position: relative;
+    height: 200px;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 0px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 0px;
+}
+
+#map {
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+}
+

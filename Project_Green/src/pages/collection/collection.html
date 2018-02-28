@@ -1,0 +1,34 @@
+<!--
+  Generated template for the CollectionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>HERBARIUM</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="row" style="width: 100%">
+   <div class="col" style="width: 100%">
+     <button ion-button (click)="prevPage()" style="width: 100%">Vorrige</button>
+   </div>
+   <div class="col" style="width: 100%">
+     <button ion-button (click)="nextPage()" style="width: 100%">Nächste</button>
+   </div>
+ </div>
+
+ <ion-item class="text" *ngFor="let item of plants" (click)='itemClicked(item)'>
+     <ion-icon name="flower"></ion-icon>
+     {{item.name}}
+ </ion-item>
+   <!--<ion-infinite-scroll
+   on-infinite="nextPage()"
+   distance="1%">
+ </ion-infinite-scroll>-->
+</ion-content>

@@ -1,21 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title text-center>HOME</ion-title>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <button ion-button outline (click)="signInWithGitHub()">Login</button>
-  <button ion-button outline (click)="signOut()">Logout</button>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content padding style="background-color:#aceace">
+  <div text-center>
+    <ion-img width=150px height=150px style="background-color:#aceace" src="assets/imgs/leaf-logo.png"></ion-img>
+    <h2>Willkommen zu <span style="color:green">Project Green</span>!</h2>
+    <p>
+      Unsere App dient in erster linie dazu Pflanzen zu bestimmen welche dir umbekannt erscheinen.<br>Dies kannst du im Tab <b>Bestimmen</b>!
+    </p>
+    <p>
+      Du kannst dir aber auch ein sogenanntes "Digitales Herbarium" erstellen, indem du Profile für deine gefundenen Pflanzen anlegst.<br>Schaue dir dazu dein <b>Profil</b> an!
+    </p>
+    <p>
+      Willst du eifach in unserer Pflanzen-Datenbank stöbern?<br>Schau dir den Tab <b>Lexikon</b> an!
+    </p>
+  </div>
   <!-- Contains test for database-service
     <ion-list>
     <ion-item class="text" *ngFor="let item of accounts | async">

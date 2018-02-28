@@ -9,13 +9,11 @@ export class Plant {
     lat: number;
     lng: number;
     //img
-    img: string;
     img: File;
     //ids
     user_id: string;
     parent_plant_id: string;
 
-    constructor(pid: string, name: string, desc: string, lat: number, lng: number, uid: string, ppid, img: string) {
     constructor(pid: string, name: string, desc: string, lat: number, lng: number, uid: string, ppid, img: File) {
         //basics
         this.id = pid;

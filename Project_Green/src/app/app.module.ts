@@ -9,16 +9,6 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { IdentifyPage } from '../pages/identify/identify';
-import { MapPage } from '../pages/map/map';
-import { ProfilePage } from '../pages/profile/profile';
-import { CollectionPage } from '../pages/collection/collection';
-import { AddUserPlantPage } from '../pages/add-user-plant/add-user-plant';
-
-
-//Popoups
 import { UserPlantPage } from '../pages/user-plant/user-plant';
 
 //Popoups
@@ -44,9 +34,6 @@ import { DatabasePlantsPage } from '../pages/database-plants/database-plants';
 
 //google maps
 import { Geolocation } from '@ionic-native/geolocation';
-
-//Camera
-import { Camera } from '@ionic-native/camera';
 
 //settings
 import { SettingsProvider } from '../providers/settings/settings';
@@ -74,13 +61,6 @@ const firebaseConfig = {
     DatabasePlantsPage,
     SettingsPage,
     PopoverPage,
-    RegisterPage,
-    LoginPage,
-    IdentifyPage,
-    MapPage,
-    ProfilePage,
-    CollectionPage,
-    AddUserPlantPage
     MailAuthPage,
     MailCreateAccountPage
   ],
@@ -104,13 +84,6 @@ const firebaseConfig = {
     DatabasePlantsPage,
     SettingsPage,
     PopoverPage,
-    RegisterPage,
-    LoginPage,
-    IdentifyPage,
-    MapPage,
-    ProfilePage,
-    CollectionPage,
-    AddUserPlantPage
     MailAuthPage,
     MailCreateAccountPage
   ],
@@ -121,8 +94,6 @@ const firebaseConfig = {
     DatabaseServiceProvider,
     Geolocation,
     SettingsProvider,
-    InAppBrowser,
-    Camera 
     InAppBrowser
   ]
 })

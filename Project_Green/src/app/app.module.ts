@@ -19,6 +19,11 @@ import { AddUserPlantPage } from '../pages/add-user-plant/add-user-plant';
 
 
 //Popoups
+import { UserPlantPage } from '../pages/user-plant/user-plant';
+
+//Popoups
+import { MailAuthPage } from '../pages/mail-auth/mail-auth';
+import { MailCreateAccountPage } from '../pages/mail-create-account/mail-create-account';
 import { PopoverPage } from '../pages/popover/popover';
 
 //misc
@@ -64,6 +69,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    UserPlantPage,
     TabsPage,
     DatabasePlantsPage,
     SettingsPage,
@@ -75,6 +81,8 @@ const firebaseConfig = {
     ProfilePage,
     CollectionPage,
     AddUserPlantPage
+    MailAuthPage,
+    MailCreateAccountPage
   ],
   imports: [
     BrowserModule,
@@ -91,6 +99,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    UserPlantPage,
     TabsPage,
     DatabasePlantsPage,
     SettingsPage,
@@ -102,6 +111,8 @@ const firebaseConfig = {
     ProfilePage,
     CollectionPage,
     AddUserPlantPage
+    MailAuthPage,
+    MailCreateAccountPage
   ],
   providers: [
     StatusBar,
@@ -112,6 +123,7 @@ const firebaseConfig = {
     SettingsProvider,
     InAppBrowser,
     Camera 
+    InAppBrowser
   ]
 })
 export class AppModule {}

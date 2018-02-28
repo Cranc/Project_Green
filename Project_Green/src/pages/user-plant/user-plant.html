@@ -1,5 +1,5 @@
 <!--
-  Generated template for the DatabasePlantsPage page.
+  Generated template for the UserPlantPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,22 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center>LEXIKON</ion-title>
-    <ion-title>Pflanzen Datenbank</ion-title>
+    <ion-title>Mein Hebrarium</ion-title>
   </ion-navbar>
 
 </ion-header>
-
-
-<ion-content padding style="background-color:#aceace">
-  <div class="row">
-    <div class="col">
-      <button ion-button (click)="prevPage()">Vorrige</button>
-    </div>
-    <div class="col">
-      <button ion-button (click)="nextPage()">Nächste</button>
-    </div>
-  </div>
 
 
 <ion-content padding>
@@ -39,7 +27,6 @@
       <ion-icon name="flower"></ion-icon>
       {{item.name}}
   </ion-item>
-
     <!--<ion-infinite-scroll
     on-infinite="nextPage()"
     distance="1%">

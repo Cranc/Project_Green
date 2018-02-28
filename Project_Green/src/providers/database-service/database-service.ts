@@ -8,6 +8,7 @@ import { Plant } from '../../app/classes/plant';
 import { Parent_Plant } from '../../app/classes/parent_plant';
 import { error } from 'util';
 import { DatabaseSnapshot } from 'angularfire2/interfaces';
+import { resolve } from 'url';
 //import { database } from 'firebase/app';
 //import { AngularFireModule } from 'angularfire2';
 
@@ -143,11 +144,26 @@ export class DatabaseServiceProvider {
   }
 
   /**
+   * Connects to the database and trys to remove the user plant with the given key.
+   * @param key id of the plant
+   */
+  public removeUserPlant(key: string) : Promise<boolean> {
+    return new Promise ((resolve) => {
+      try{
+        this._db.object(`/plants/${key}`).remove();
+        resolve(true);
+      } catch (e) {
+        error(e);
+      }
+    })
+  }
+
+  /**
    * Connects to the Database and returns a list of all plants with the given id.
    * @param offset amount of items to get
    * @param plant_id id of the plant type
    */
-  public listUserPlantsWithId(offset: number, plant_id: number) : FirebaseListObservable<Plant[]>{
+  public listUserPlantsWithId(offset: number, plant_id: string) : FirebaseListObservable<Plant[]>{
     return this._db.list('/plants',{
       query: {
         orderByChild: 'parent_plant_id',

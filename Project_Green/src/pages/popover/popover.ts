@@ -31,7 +31,7 @@ export class PopoverPage {
 
   msg: string;
   header: string;
-  id: number;
+  id: string;
 
   //map stuff
   @ViewChild('map') mapElement: ElementRef;
@@ -175,6 +175,20 @@ export class PopoverPage {
   deleteMarkers() {
     this.clearMarkers();
     this.markers = [];
+  }
+
+  /**
+   * removes a plant from the database
+   */
+  deleteUserPlant(){
+    if(!this.user_flag)
+      return;
+
+    this.db.removeUserPlant(this.id).then(val => {
+      this.close();
+    }, error => {
+      console.log(error);
+    })
   }
 
   /**

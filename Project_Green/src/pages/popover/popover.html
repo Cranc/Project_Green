@@ -21,5 +21,10 @@
           {{msg}}
         </div>
       </div>
+      <div>
+        <button ion-button color="danger" [hidden]="!user_flag" style="width: 100%;" (click) = "deleteUserPlant()">
+          Löschen
+        </button>
+      </div>
   </div>
 </ion-content>

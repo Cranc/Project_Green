@@ -74,6 +74,9 @@ export class UserPlantPage {
     //console.log(plant);
     let popover = this.popoverCtrl.create(PopoverPage, plant);
     popover.present();
+    popover.onDidDismiss(() => {
+      this.loadMore();
+    });
   }
 
   /**
